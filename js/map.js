@@ -67,15 +67,65 @@ console.log(getRemoveClass());
 
 
 
-var mapPins = document.querySelectorAll('.map__pins');
+var mapPins = document.querySelector('.map__pins');
 console.log(mapPins);
 
 var template = document.querySelector('#pin').content.querySelector('button');
+var PIN_HEIGHT = 70;
+var PIN_WEIGHT = 50;
 
 console.log(template);
 
-for (var i = 0; i < 8; i++) {
+for (var i = 0; i < listData.length; i++) {
   var element = template.cloneNode(true);
   console.log(element);
+  element.style.left = listData[i].location.x - PIN_WEIGHT / 2 + 'px';
+  element.style.top = listData[i].location.y + PIN_HEIGHT + 'px';
+  element.querySelector('img').src = listData[i].author.avatar;
   mapPins.appendChild(element);
+}
+
+var map = document.getElementsByClassName('map')[0];
+console.log(map);
+var mapFiltersContainer = document.getElementsByClassName('map__filters-container')[0];
+var templateCard = document.querySelector('#card').content.querySelector('article');
+console.log(templateCard)
+
+for (var i = 0; i < listData.length; i++) {
+  var elementCard = templateCard.cloneNode(true);
+  console.log(elementCard);
+
+  elementCard.querySelector('.popup__title').textContent = listData[i].offer.title;
+
+  elementCard.querySelector('.popup__text--price').textContent = listData[i].offer.price + '₽/ночь';
+
+  elementCard.querySelector('.popup__type').textContent = listData[i].offer.address;
+
+  elementCard.querySelector('.popup__text--address').textContent = listData[i].offer.type;
+
+  elementCard.querySelector('.popup__text--capacity').textContent = listData[i].offer.rooms + ' комнаты' + ' для ' + listData[i].offer.guests + ' гостей';
+
+  elementCard.querySelector('.popup__text--time').textContent = 'Заезд ' + ' после ' + listData[i].offer.checkin + ' , ' + ' выезд ' + ' до ' + listData[i].offer.checkout;
+
+  elementCard.querySelector('.popup__description').textContent = listData[i].offer.description;
+
+  elementCard.querySelector('.popup__feature').textContent = listData[i].offer.features;
+
+  elementCard.querySelector('.popup__feature').textContent = listData[i].offer.features;
+
+  var popapPhotos = elementCard.querySelector('.popup__photos');
+  var popapPhoto = elementCard.querySelector('.popup__photo');
+
+  for (var j = 0; j < PHOTOS.length; j++) {
+    var elementPhotos = popapPhoto.cloneNode(true);
+    console.log(elementPhotos);
+    popapPhotos.appendChild(elementPhotos);
+
+    elementCard.querySelector('.popup__photo').src = listData[i].offer.photos[j];
+  };
+  
+  elementCard.querySelector('.popup__avatar').src = listData[i].author.avatar;
+
+  map.insertBefore(elementCard, mapFiltersContainer);
+
 }
