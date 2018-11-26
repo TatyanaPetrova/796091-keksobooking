@@ -33,45 +33,45 @@ function createAdCard(index) {
       checkout: getRandomValueFromList(CHECKOUT),
       features: getRandomValueFromList(FEATURES),
       description: '',
-      photos: PHOTOS.sort(function (a, b) {
-        return 0.5 - Math.random()
+      photos: PHOTOS.sort(function () {
+        return 0.5 - Math.random();
       }),
     },
     location: {
       x: getRandomValue(0, 1200),
       y: getRandomValue(130, 630),
     }
-  }
+  };
 }
 
 function generateOfferList() {
   var list = [];
   for (var i = 0; i < 8; i++) {
-    list.push(createAdCard(i))
+    list.push(createAdCard(i));
   }
   return list;
 }
 
-var listData = generateOfferList()
-console.log(listData);
+var listData = generateOfferList();
+//  console.log(listData);
 
 var getRemoveClass = function () {
   var map = document.getElementsByClassName('map')[0];
   map.classList.remove('map--faded');
-}
-console.log(getRemoveClass());
+};
+getRemoveClass();
 
 
 var mapPins = document.querySelector('.map__pins');
-console.log(mapPins);
+//  console.log(mapPins);
 var template = document.querySelector('#pin').content.querySelector('button');
 var PIN_HEIGHT = 70;
 var PIN_WEIGHT = 50;
-console.log(template);
+//  console.log(template);
 
 for (var i = 0; i < listData.length; i++) {
   var element = template.cloneNode(true);
-  console.log(element);
+  //  console.log(element);
   element.style.left = listData[i].location.x - PIN_WEIGHT / 2 + 'px';
   element.style.top = listData[i].location.y + PIN_HEIGHT + 'px';
   element.querySelector('img').src = listData[i].author.avatar;
@@ -79,12 +79,12 @@ for (var i = 0; i < listData.length; i++) {
 }
 
 var map = document.getElementsByClassName('map')[0];
-console.log(map);
+//  console.log(map);
 var mapFiltersContainer = document.getElementsByClassName('map__filters-container')[0];
 var templateCard = document.querySelector('#card').content.querySelector('article');
-console.log(templateCard)
+//  console.log(templateCard)
 var elementCard = templateCard.cloneNode(true);
-console.log(elementCard);
+//  console.log(elementCard);
 
 
 elementCard.querySelector('.popup__title').textContent = listData[0].offer.title;
@@ -107,10 +107,10 @@ var popapPhoto = elementCard.querySelector('.popup__photo');
 
 for (var j = 0; j < PHOTOS.length; j++) {
   var elementPhotos = popapPhoto.cloneNode(true);
-  console.log(elementPhotos);
+  //  console.log(elementPhotos);
   popapPhotos.appendChild(elementPhotos);
   elementCard.querySelector('.popup__photo').src = listData[0].offer.photos[j];
-};
+}
 popapPhotos.removeChild(elementCard.querySelector('.popup__photo:nth-child(2)'));
 
 elementCard.querySelector('.popup__avatar').src = listData[0].author.avatar;
@@ -127,8 +127,9 @@ var getType = function () {
     case 'palace':
       return 'Дворец';
   }
-}
-console.log(getType());
+  return listData[0].offer.type;
+};
+//  console.log(getType());
 
 elementCard.querySelector('.popup__text--address').textContent = getType();
 
