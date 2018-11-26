@@ -46,17 +46,13 @@ function createAdCard(index) {
 
 function generateOfferList() {
   var list = [];
-
-
   for (var i = 0; i < 8; i++) {
     list.push(createAdCard(i))
   }
-
   return list;
 }
 
 var listData = generateOfferList()
-
 console.log(listData);
 
 var getRemoveClass = function () {
@@ -66,14 +62,11 @@ var getRemoveClass = function () {
 console.log(getRemoveClass());
 
 
-
 var mapPins = document.querySelector('.map__pins');
 console.log(mapPins);
-
 var template = document.querySelector('#pin').content.querySelector('button');
 var PIN_HEIGHT = 70;
 var PIN_WEIGHT = 50;
-
 console.log(template);
 
 for (var i = 0; i < listData.length; i++) {
@@ -85,16 +78,14 @@ for (var i = 0; i < listData.length; i++) {
   mapPins.appendChild(element);
 }
 
-
-
 var map = document.getElementsByClassName('map')[0];
 console.log(map);
 var mapFiltersContainer = document.getElementsByClassName('map__filters-container')[0];
 var templateCard = document.querySelector('#card').content.querySelector('article');
 console.log(templateCard)
-
 var elementCard = templateCard.cloneNode(true);
 console.log(elementCard);
+
 
 elementCard.querySelector('.popup__title').textContent = listData[0].offer.title;
 
@@ -110,20 +101,20 @@ elementCard.querySelector('.popup__description').textContent = listData[0].offer
 
 elementCard.querySelector('.popup__feature').textContent = listData[0].offer.features;
 
+
 var popapPhotos = elementCard.querySelector('.popup__photos');
 var popapPhoto = elementCard.querySelector('.popup__photo');
 
 for (var j = 0; j < PHOTOS.length; j++) {
   var elementPhotos = popapPhoto.cloneNode(true);
   console.log(elementPhotos);
-  
-  popapPhotos.removeChild(popapPhoto);
   popapPhotos.appendChild(elementPhotos);
-
   elementCard.querySelector('.popup__photo').src = listData[0].offer.photos[j];
 };
+popapPhotos.removeChild(elementCard.querySelector('.popup__photo:nth-child(2)'));
 
 elementCard.querySelector('.popup__avatar').src = listData[0].author.avatar;
+
 
 var getType = function () {
   switch (listData[0].offer.type) {
@@ -137,9 +128,9 @@ var getType = function () {
       return 'Дворец';
   }
 }
-
 console.log(getType());
 
 elementCard.querySelector('.popup__text--address').textContent = getType();
+
 
 map.insertBefore(elementCard, mapFiltersContainer);
