@@ -24,7 +24,7 @@ function createAdCard(index) {
     },
     offer: {
       title: getRandomValueFromList(TITLES),
-      address: '{{location.x}}, {{location.y}}',
+      address: getRandomValue(0, 1200) + ' , ' + getRandomValue(130, 630),
       price: getRandomValue(1000, 1000000),
       type: getRandomValueFromList(TYPES),
       rooms: getRandomValue(1, 5),
@@ -85,47 +85,61 @@ for (var i = 0; i < listData.length; i++) {
   mapPins.appendChild(element);
 }
 
+
+
 var map = document.getElementsByClassName('map')[0];
 console.log(map);
 var mapFiltersContainer = document.getElementsByClassName('map__filters-container')[0];
 var templateCard = document.querySelector('#card').content.querySelector('article');
 console.log(templateCard)
 
-for (var i = 0; i < listData.length; i++) {
-  var elementCard = templateCard.cloneNode(true);
-  console.log(elementCard);
+var elementCard = templateCard.cloneNode(true);
+console.log(elementCard);
 
-  elementCard.querySelector('.popup__title').textContent = listData[i].offer.title;
+elementCard.querySelector('.popup__title').textContent = listData[0].offer.title;
 
-  elementCard.querySelector('.popup__text--price').textContent = listData[i].offer.price + '₽/ночь';
+elementCard.querySelector('.popup__text--price').textContent = listData[0].offer.price + '₽/ночь';
 
-  elementCard.querySelector('.popup__type').textContent = listData[i].offer.address;
+elementCard.querySelector('.popup__type').textContent = listData[0].offer.address;
 
-  elementCard.querySelector('.popup__text--address').textContent = listData[i].offer.type;
+elementCard.querySelector('.popup__text--capacity').textContent = listData[0].offer.rooms + ' комнаты' + ' для ' + listData[0].offer.guests + ' гостей';
 
-  elementCard.querySelector('.popup__text--capacity').textContent = listData[i].offer.rooms + ' комнаты' + ' для ' + listData[i].offer.guests + ' гостей';
+elementCard.querySelector('.popup__text--time').textContent = 'Заезд ' + ' после ' + listData[0].offer.checkin + ' , ' + ' выезд ' + ' до ' + listData[0].offer.checkout;
 
-  elementCard.querySelector('.popup__text--time').textContent = 'Заезд ' + ' после ' + listData[i].offer.checkin + ' , ' + ' выезд ' + ' до ' + listData[i].offer.checkout;
+elementCard.querySelector('.popup__description').textContent = listData[0].offer.description;
 
-  elementCard.querySelector('.popup__description').textContent = listData[i].offer.description;
+elementCard.querySelector('.popup__feature').textContent = listData[0].offer.features;
 
-  elementCard.querySelector('.popup__feature').textContent = listData[i].offer.features;
+var popapPhotos = elementCard.querySelector('.popup__photos');
+var popapPhoto = elementCard.querySelector('.popup__photo');
 
-  elementCard.querySelector('.popup__feature').textContent = listData[i].offer.features;
-
-  var popapPhotos = elementCard.querySelector('.popup__photos');
-  var popapPhoto = elementCard.querySelector('.popup__photo');
-
-  for (var j = 0; j < PHOTOS.length; j++) {
-    var elementPhotos = popapPhoto.cloneNode(true);
-    console.log(elementPhotos);
-    popapPhotos.appendChild(elementPhotos);
-
-    elementCard.querySelector('.popup__photo').src = listData[i].offer.photos[j];
-  };
+for (var j = 0; j < PHOTOS.length; j++) {
+  var elementPhotos = popapPhoto.cloneNode(true);
+  console.log(elementPhotos);
   
-  elementCard.querySelector('.popup__avatar').src = listData[i].author.avatar;
+  popapPhotos.removeChild(popapPhoto);
+  popapPhotos.appendChild(elementPhotos);
 
-  map.insertBefore(elementCard, mapFiltersContainer);
+  elementCard.querySelector('.popup__photo').src = listData[0].offer.photos[j];
+};
 
+elementCard.querySelector('.popup__avatar').src = listData[0].author.avatar;
+
+var getType = function () {
+  switch (listData[0].offer.type) {
+    case 'flat':
+      return 'Квартира';
+    case 'bungalo':
+      return 'Бунгало';
+    case 'house':
+      return 'Дом';
+    case 'palace':
+      return 'Дворец';
+  }
 }
+
+console.log(getType());
+
+elementCard.querySelector('.popup__text--address').textContent = getType();
+
+map.insertBefore(elementCard, mapFiltersContainer);
