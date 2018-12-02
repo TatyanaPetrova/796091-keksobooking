@@ -159,8 +159,6 @@ getDisabledfunction(buttonFormReset);
 
 
 // Добавляем click для .map__pin--main.
-//  var MAIN_MAP_PIN_WIDTH = 156;
-//  var MAIN_MAP_PIN_HEIGTH = 156;
 var mapPinMain = document.querySelector('.map__pin--main');
 var adForm = document.querySelector('.ad-form');
 
@@ -183,7 +181,8 @@ var onMapPinMainClick = function () {
 
 var onMapPinMouseUp = function () {
   var getAddValue = function (selector) {
-    selector.setAttribute('value', '123');
+    selector.setAttribute('value', ((SCREEN_WIDTH / 2) +
+      ' ; ' + (SCREEN_HEIGHT / 2)));
   };
   getAddValue(inputAddress);
 };
