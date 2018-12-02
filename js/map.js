@@ -159,8 +159,8 @@ getDisabledfunction(buttonFormReset);
 
 
 // Добавляем click для .map__pin--main.
-var MAIN_MAP_PIN_WIDTH = 156;
-var MAIN_MAP_PIN_HEIGTH = 156;
+//  var MAIN_MAP_PIN_WIDTH = 156;
+//  var MAIN_MAP_PIN_HEIGTH = 156;
 var mapPinMain = document.querySelector('.map__pin--main');
 var adForm = document.querySelector('.ad-form');
 
@@ -190,9 +190,7 @@ var onMapPinMouseUp = function () {
 
 
 var mapPin = document.querySelectorAll('.map__pin');
-console.log(mapPin);
 var mapCard = document.querySelectorAll('.map__card');
-console.log(mapCard);
 
 var getAddClass = function (selector, classAdd) {
   for (var i = 0; i < selector.length; i++) {
@@ -212,16 +210,25 @@ var onMapPinClick = function () {
 };
 
 var popupClose = document.querySelectorAll('.popup__close');
+var getControlClick = function () {
+  var onButtonPopupCloseClick = function () {
+    getAddClass(mapCard, 'hidden');
+  };
 
-var onButtonPopupCloseClick = function () {
-  getAddClass(mapCard, 'hidden');
+  mapPinMain.addEventListener('click', onMapPinMainClick);
+  mapPinMain.addEventListener('mouseup', onMapPinMouseUp);
+
+  var getControlClickMapPin = function () {
+    for (var i = 1; i < mapPin.length; i++) {
+      mapPin[i].addEventListener('click', onMapPinClick);
+    }
+  };
+  getControlClickMapPin();
+  var getControlClickPopupClose = function () {
+    for (var i = 0; i < popupClose.length; i++) {
+      popupClose[i].addEventListener('click', onButtonPopupCloseClick);
+    }
+  };
+  getControlClickPopupClose();
 };
-
-mapPinMain.addEventListener('click', onMapPinMainClick);
-mapPinMain.addEventListener('mouseup', onMapPinMouseUp);
-for (var i = 1; i < mapPin.length; i++) {
-  mapPin[i].addEventListener('click', onMapPinClick);
-}
-for (var i = 0; i < popupClose.length; i++) {
-  popupClose[i].addEventListener('click', onButtonPopupCloseClick);
-}
+getControlClick();
