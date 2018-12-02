@@ -19,6 +19,7 @@ var PIN_HEIGHT = 70;
 var PIN_WEIGHT = 50;
 
 var copyPhotos = PHOTOS.slice();
+var map = document.querySelector('.map');
 
 function getRandomValueFromList(list) {
   var rand = Math.floor(Math.random() * list.length);
@@ -65,12 +66,10 @@ function generateOfferList() {
 }
 
 var listData = generateOfferList();
-var map = document.querySelector('.map');
 
-var getRemoveClass = function (selector, ClassDelete) {
-  selector.classList.remove(ClassDelete);
+var getRemoveClass = function (selector, classDelete) {
+  selector.classList.remove(classDelete);
 };
-getRemoveClass(map, 'map--faded');
 
 var mapPins = document.querySelector('.map__pins');
 var template = document.querySelector('#pin').content.querySelector('button');
@@ -136,3 +135,93 @@ var getCreateCards = function () {
   map.insertBefore(elementCard, mapFiltersContainer);
 };
 getCreateCards();
+
+//  Добавляем атрибут disabled
+
+var input = document.querySelectorAll('input');
+var select = document.querySelectorAll('select');
+var textarea = document.querySelectorAll('textarea');
+var buttonFormSubmit = document.querySelectorAll('.ad-form__submit');
+var buttonFormReset = document.querySelectorAll('.ad-form__reset');
+var inputAddress = document.getElementById('address');
+
+var getDisabledfunction = function (selector) {
+  for (var i = 0; i < selector.length; i++) {
+    selector[i].setAttribute('disabled', 'disabled');
+  }
+};
+
+getDisabledfunction(input);
+getDisabledfunction(select);
+getDisabledfunction(textarea);
+getDisabledfunction(buttonFormSubmit);
+getDisabledfunction(buttonFormReset);
+
+
+// Добавляем click для .map__pin--main.
+var MAIN_MAP_PIN_WIDTH = 156;
+var MAIN_MAP_PIN_HEIGTH = 156;
+var mapPinMain = document.querySelector('.map__pin--main');
+var adForm = document.querySelector('.ad-form');
+
+var onMapPinMainClick = function () {
+  getRemoveClass(map, 'map--faded');
+  getRemoveClass(adForm, 'ad-form--disabled');
+
+  var getDeleteDisabled = function (selector) {
+    for (var i = 0; i < selector.length; i++) {
+      selector[i].disabled = false;
+    }
+  };
+  getDeleteDisabled(input);
+  getDeleteDisabled(select);
+  getDeleteDisabled(textarea);
+  getDeleteDisabled(buttonFormSubmit);
+  getDeleteDisabled(buttonFormReset);
+
+};
+
+var onMapPinMouseUp = function () {
+  var getAddValue = function (selector) {
+    selector.setAttribute('value', '123');
+  };
+  getAddValue(inputAddress);
+};
+
+
+var mapPin = document.querySelectorAll('.map__pin');
+console.log(mapPin);
+var mapCard = document.querySelectorAll('.map__card');
+console.log(mapCard);
+
+var getAddClass = function (selector, classAdd) {
+  for (var i = 0; i < selector.length; i++) {
+    selector[i].classList.add(classAdd);
+  }
+};
+getAddClass(mapCard, 'hidden');
+
+var onMapPinClick = function () {
+
+  var getRemoveManyClass = function (selector, classDelete) {
+    for (var i = 0; i < selector.length; i++) {
+      selector[i].classList.remove(classDelete);
+    }
+  };
+  getRemoveManyClass(mapCard, 'hidden');
+};
+
+var popupClose = document.querySelectorAll('.popup__close');
+
+var onButtonPopupCloseClick = function () {
+  getAddClass(mapCard, 'hidden');
+};
+
+mapPinMain.addEventListener('click', onMapPinMainClick);
+mapPinMain.addEventListener('mouseup', onMapPinMouseUp);
+for (var i = 1; i < mapPin.length; i++) {
+  mapPin[i].addEventListener('click', onMapPinClick);
+}
+for (var i = 0; i < popupClose.length; i++) {
+  popupClose[i].addEventListener('click', onButtonPopupCloseClick);
+}
