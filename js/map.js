@@ -37,7 +37,7 @@ function createAdCard(index) {
     },
     offer: {
       title: getRandomValueFromList(TITLES),
-      address: getRandomValue(0, SCREEN_WIDTH) + ' , ' + getRandomValue(REFERENCE_POINT_HEIGHT, SCREEN_HEIGHT),
+      address: getRandomValue(0, SCREEN_WIDTH) + ' , ' + getRandomValue(REFERENCE_POINT_HEIGHT, SCREEN_HEIGHT - PIN_HEIGHT),
       price: getRandomValue(MIN_PRICE, MAX_PRICE),
       type: getRandomValueFromList(TYPES),
       rooms: getRandomValue(MIN_NUMBER, MAX_ROOMS),
@@ -52,7 +52,7 @@ function createAdCard(index) {
     },
     location: {
       x: getRandomValue(0, SCREEN_WIDTH),
-      y: getRandomValue(REFERENCE_POINT_HEIGHT, SCREEN_HEIGHT),
+      y: getRandomValue(REFERENCE_POINT_HEIGHT, SCREEN_HEIGHT - PIN_HEIGHT),
     }
   };
 }
@@ -157,8 +157,6 @@ getDisabledfunction(textarea);
 getDisabledfunction(buttonFormSubmit);
 getDisabledfunction(buttonFormReset);
 
-
-// Добавляем click для .map__pin--main.
 var mapPinMain = document.querySelector('.map__pin--main');
 var adForm = document.querySelector('.ad-form');
 
@@ -191,12 +189,12 @@ var onMapPinMouseUp = function () {
 var mapPin = document.querySelectorAll('.map__pin');
 var mapCard = document.querySelectorAll('.map__card');
 
-var getAddClass = function (selector, classAdd) {
+var getHideElement = function (selector, classAdd) {
   for (var i = 0; i < selector.length; i++) {
     selector[i].classList.add(classAdd);
   }
 };
-getAddClass(mapCard, 'hidden');
+getHideElement(mapCard, 'hidden');
 
 var onMapPinClick = function () {
 
@@ -211,7 +209,7 @@ var onMapPinClick = function () {
 var popupClose = document.querySelectorAll('.popup__close');
 var getControlClick = function () {
   var onButtonPopupCloseClick = function () {
-    getAddClass(mapCard, 'hidden');
+    getHideElement(mapCard, 'hidden');
   };
 
   mapPinMain.addEventListener('click', onMapPinMainClick);
@@ -231,3 +229,62 @@ var getControlClick = function () {
   getControlClickPopupClose();
 };
 getControlClick();
+
+//  связь типа жилья и цены
+
+var adTypeSelect = document.querySelector('#type');
+var housePrise = document.querySelector('#price');
+
+var onSelectType = function () {
+  var adType = document.querySelector('#type').value;
+  switch (adType) {
+    case 'bungalo':
+      return housePrise.value = '0';
+    case 'flat':
+      return housePrise.value = '1000';
+    case 'house':
+      return housePrise.value = '5000';
+    case 'palace':
+      return housePrise.value = '10000';
+  }
+  return adType;
+};
+
+adTypeSelect.addEventListener('change', onSelectType);
+
+inputAddress.setAttribute('disabled', 'disabled');
+
+//  связь времени заезада и выезда
+
+var timeOutSelect = document.querySelector('#timeout');
+var timeInSelect = document.querySelector('#timein');
+
+var onSelectTimeOut = function () {
+  var timeInValue = document.querySelector('#timein').value;
+  switch (timeInValue) {
+    case '12:00':
+      return timeOutSelect.value = '12:00';
+    case '13:00':
+      return timeOutSelect.value = '13:00';
+    case '14:00':
+      return timeOutSelect.value = '14:00';
+  }
+  return timeInValue;
+};
+
+timeInSelect.addEventListener('change', onSelectTimeOut);
+
+var onSelectTimeIn = function () {
+  var timeOutValue = document.querySelector('#timeout').value;
+  switch (timeOutValue) {
+    case '12:00':
+      return timeInSelect.value = '12:00';
+    case '13:00':
+      return timeInSelect.value = '13:00';
+    case '14:00':
+      return timeInSelect.value = '14:00';
+  }
+  return timeOutValue;
+};
+
+timeOutSelect.addEventListener('change', onSelectTimeIn);
