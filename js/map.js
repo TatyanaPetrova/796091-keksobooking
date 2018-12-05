@@ -301,28 +301,31 @@ timeOutSelect.addEventListener('change', onSelectTimeIn);
 
 var roomNumber = document.querySelector('#room_number');
 var capacity = document.querySelector('#capacity');
-capacity.removeChild(capacity.querySelector('[value="2"]'));
-capacity.removeChild(capacity.querySelector('[value="3"]'));
-capacity.removeChild(capacity.querySelector('[value="0"]'));
 
 var onSelectRoomNumber = function () {
   var roomNumberValue = document.querySelector('#room_number').value;
   switch (roomNumberValue) {
     case '1':
       capacity.value = '1';
+      capacity.options.length = 0;
+      capacity.options[capacity.options.length] = new Option('для 1 гостя', '1');
+      
       break;
     case '2':
+      capacity.options.length = 0;
+      capacity.options[capacity.options.length] = new Option('для 1 гостя', '1');
       capacity.options[capacity.options.length] = new Option('для 2 гостей', '2');
       capacity.value = '2';
       break;
     case '3':
+      capacity.options.length = 0;
+      capacity.options[capacity.options.length] = new Option('для 1 гостя', '1');
+      capacity.options[capacity.options.length] = new Option('для 2 гостей', '2');
       capacity.options[capacity.options.length] = new Option('для 3 гостей', '3');
       capacity.value = '3';
       break;
     case '100':
-      capacity.removeChild(capacity.querySelector('[value="2"]'));
-      capacity.removeChild(capacity.querySelector('[value="3"]'));
-      capacity.removeChild(capacity.querySelector('[value="1"]'));
+     capacity.options.length = 0;
       capacity.options[capacity.options.length] = new Option('не для гостей', '0');
 
       break;
