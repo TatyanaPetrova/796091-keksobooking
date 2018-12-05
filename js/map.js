@@ -239,13 +239,17 @@ var onSelectType = function () {
   var adType = document.querySelector('#type').value;
   switch (adType) {
     case 'bungalo':
-      return housePrise.value = '0';
+      housePrise.value = '0';
+      break;
     case 'flat':
-      return housePrise.value = '1000';
+      housePrise.value = '1000';
+      break;
     case 'house':
-      return housePrise.value = '5000';
+      housePrise.value = '5000';
+      break;
     case 'palace':
-      return housePrise.value = '10000';
+      housePrise.value = '10000';
+      break;
   }
   return adType;
 };
@@ -263,11 +267,14 @@ var onSelectTimeOut = function () {
   var timeInValue = document.querySelector('#timein').value;
   switch (timeInValue) {
     case '12:00':
-      return timeOutSelect.value = '12:00';
+      timeOutSelect.value = '12:00';
+      break;
     case '13:00':
-      return timeOutSelect.value = '13:00';
+      timeOutSelect.value = '13:00';
+      break;
     case '14:00':
-      return timeOutSelect.value = '14:00';
+      timeOutSelect.value = '14:00';
+      break;
   }
   return timeInValue;
 };
@@ -278,11 +285,14 @@ var onSelectTimeIn = function () {
   var timeOutValue = document.querySelector('#timeout').value;
   switch (timeOutValue) {
     case '12:00':
-      return timeInSelect.value = '12:00';
+      timeInSelect.value = '12:00';
+      break;
     case '13:00':
-      return timeInSelect.value = '13:00';
+      timeInSelect.value = '13:00';
+      break;
     case '14:00':
-      return timeInSelect.value = '14:00';
+      timeInSelect.value = '14:00';
+      break;
   }
   return timeOutValue;
 };
