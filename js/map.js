@@ -256,8 +256,6 @@ var onSelectType = function () {
 
 adTypeSelect.addEventListener('change', onSelectType);
 
-inputAddress.setAttribute('disabled', 'disabled');
-
 //  связь времени заезада и выезда
 
 var timeOutSelect = document.querySelector('#timeout');
