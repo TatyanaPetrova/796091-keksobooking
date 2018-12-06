@@ -309,7 +309,6 @@ var onSelectRoomNumber = function () {
       capacity.value = '1';
       capacity.options.length = 0;
       capacity.options[capacity.options.length] = new Option('для 1 гостя', '1');
-      
       break;
     case '2':
       capacity.options.length = 0;
@@ -325,9 +324,8 @@ var onSelectRoomNumber = function () {
       capacity.value = '3';
       break;
     case '100':
-     capacity.options.length = 0;
+      capacity.options.length = 0;
       capacity.options[capacity.options.length] = new Option('не для гостей', '0');
-
       break;
   }
   return roomNumberValue;
