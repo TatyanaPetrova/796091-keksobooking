@@ -67,7 +67,7 @@ function generateOfferList() {
 
 var listData = generateOfferList();
 
-var getRemoveClass = function (selector, classDelete) {
+var removeClass = function (selector, classDelete) {
   selector.classList.remove(classDelete);
 };
 
@@ -145,90 +145,89 @@ var buttonFormSubmit = document.querySelectorAll('.ad-form__submit');
 var buttonFormReset = document.querySelectorAll('.ad-form__reset');
 var inputAddress = document.getElementById('address');
 
-var getDisabledfunction = function (selector) {
+var disabledfunction = function (selector) {
   for (var i = 0; i < selector.length; i++) {
     selector[i].setAttribute('disabled', 'disabled');
   }
 };
 
-getDisabledfunction(input);
-getDisabledfunction(select);
-getDisabledfunction(textarea);
-getDisabledfunction(buttonFormSubmit);
-getDisabledfunction(buttonFormReset);
+disabledfunction(input);
+disabledfunction(select);
+disabledfunction(textarea);
+disabledfunction(buttonFormSubmit);
+disabledfunction(buttonFormReset);
 
 var mapPinMain = document.querySelector('.map__pin--main');
 var adForm = document.querySelector('.ad-form');
 
 var onMapPinMainClick = function () {
-  getRemoveClass(map, 'map--faded');
-  getRemoveClass(adForm, 'ad-form--disabled');
+  removeClass(map, 'map--faded');
+  removeClass(adForm, 'ad-form--disabled');
 
-  var getDeleteDisabled = function (selector) {
+  var deleteDisabled = function (selector) {
     for (var i = 0; i < selector.length; i++) {
       selector[i].disabled = false;
     }
   };
-  getDeleteDisabled(input);
-  getDeleteDisabled(select);
-  getDeleteDisabled(textarea);
-  getDeleteDisabled(buttonFormSubmit);
-  getDeleteDisabled(buttonFormReset);
-
+  deleteDisabled(input);
+  deleteDisabled(select);
+  deleteDisabled(textarea);
+  deleteDisabled(buttonFormSubmit);
+  deleteDisabled(buttonFormReset);
 };
 
 var onMapPinMouseUp = function () {
-  var getAddValue = function (selector) {
+  var addValue = function (selector) {
     selector.setAttribute('value', ((SCREEN_WIDTH / 2) +
       ' ; ' + (SCREEN_HEIGHT / 2)));
   };
-  getAddValue(inputAddress);
+  addValue(inputAddress);
 };
 
 
 var mapPin = document.querySelectorAll('.map__pin');
 var mapCard = document.querySelectorAll('.map__card');
 
-var getHideElement = function (selector, classAdd) {
+var hideElement = function (selector, classAdd) {
   for (var i = 0; i < selector.length; i++) {
     selector[i].classList.add(classAdd);
   }
 };
-getHideElement(mapCard, 'hidden');
+hideElement(mapCard, 'hidden');
 
 var onMapPinClick = function () {
 
-  var getRemoveManyClass = function (selector, classDelete) {
+  var removeManyClass = function (selector, classDelete) {
     for (var i = 0; i < selector.length; i++) {
       selector[i].classList.remove(classDelete);
     }
   };
-  getRemoveManyClass(mapCard, 'hidden');
+  removeManyClass(mapCard, 'hidden');
 };
 
 var popupClose = document.querySelectorAll('.popup__close');
-var getControlClick = function () {
+var controlClick = function () {
   var onButtonPopupCloseClick = function () {
-    getHideElement(mapCard, 'hidden');
+    hideElement(mapCard, 'hidden');
   };
 
   mapPinMain.addEventListener('click', onMapPinMainClick);
   mapPinMain.addEventListener('mouseup', onMapPinMouseUp);
 
-  var getControlClickMapPin = function () {
+  var controlClickMapPin = function () {
     for (var i = 1; i < mapPin.length; i++) {
       mapPin[i].addEventListener('click', onMapPinClick);
     }
   };
-  getControlClickMapPin();
-  var getControlClickPopupClose = function () {
+  controlClickMapPin();
+  var controlClickPopupClose = function () {
     for (var i = 0; i < popupClose.length; i++) {
       popupClose[i].addEventListener('click', onButtonPopupCloseClick);
     }
   };
-  getControlClickPopupClose();
+  controlClickPopupClose();
 };
-getControlClick();
+controlClick();
 
 //  связь типа жилья и цены
 
