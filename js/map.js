@@ -19,6 +19,7 @@ var PIN_HEIGHT = 70;
 var PIN_WEIGHT = 50;
 
 var copyPhotos = PHOTOS.slice();
+var map = document.querySelector('.map');
 
 function getRandomValueFromList(list) {
   var rand = Math.floor(Math.random() * list.length);
@@ -36,7 +37,7 @@ function createAdCard(index) {
     },
     offer: {
       title: getRandomValueFromList(TITLES),
-      address: getRandomValue(0, SCREEN_WIDTH) + ' , ' + getRandomValue(REFERENCE_POINT_HEIGHT, SCREEN_HEIGHT),
+      address: getRandomValue(0, SCREEN_WIDTH) + ' , ' + getRandomValue(REFERENCE_POINT_HEIGHT, SCREEN_HEIGHT - PIN_HEIGHT),
       price: getRandomValue(MIN_PRICE, MAX_PRICE),
       type: getRandomValueFromList(TYPES),
       rooms: getRandomValue(MIN_NUMBER, MAX_ROOMS),
@@ -51,7 +52,7 @@ function createAdCard(index) {
     },
     location: {
       x: getRandomValue(0, SCREEN_WIDTH),
-      y: getRandomValue(REFERENCE_POINT_HEIGHT, SCREEN_HEIGHT),
+      y: getRandomValue(REFERENCE_POINT_HEIGHT, SCREEN_HEIGHT - PIN_HEIGHT),
     }
   };
 }
@@ -65,12 +66,10 @@ function generateOfferList() {
 }
 
 var listData = generateOfferList();
-var map = document.querySelector('.map');
 
-var getRemoveClass = function (selector, ClassDelete) {
-  selector.classList.remove(ClassDelete);
+var removeClass = function (selector, classDelete) {
+  selector.classList.remove(classDelete);
 };
-getRemoveClass(map, 'map--faded');
 
 var mapPins = document.querySelector('.map__pins');
 var template = document.querySelector('#pin').content.querySelector('button');
@@ -136,3 +135,197 @@ var getCreateCards = function () {
   map.insertBefore(elementCard, mapFiltersContainer);
 };
 getCreateCards();
+
+//  Добавляем атрибут disabled
+
+var input = document.querySelectorAll('input');
+var select = document.querySelectorAll('select');
+var textarea = document.querySelectorAll('textarea');
+var buttonFormSubmit = document.querySelectorAll('.ad-form__submit');
+var buttonFormReset = document.querySelectorAll('.ad-form__reset');
+var inputAddress = document.getElementById('address');
+
+var disabledfunction = function (selector) {
+  for (var i = 0; i < selector.length; i++) {
+    selector[i].setAttribute('disabled', 'disabled');
+  }
+};
+
+disabledfunction(input);
+disabledfunction(select);
+disabledfunction(textarea);
+disabledfunction(buttonFormSubmit);
+disabledfunction(buttonFormReset);
+
+var mapPinMain = document.querySelector('.map__pin--main');
+var adForm = document.querySelector('.ad-form');
+
+var onMapPinMainClick = function () {
+  removeClass(map, 'map--faded');
+  removeClass(adForm, 'ad-form--disabled');
+
+  var deleteDisabled = function (selector) {
+    for (var i = 0; i < selector.length; i++) {
+      selector[i].disabled = false;
+    }
+  };
+  deleteDisabled(input);
+  deleteDisabled(select);
+  deleteDisabled(textarea);
+  deleteDisabled(buttonFormSubmit);
+  deleteDisabled(buttonFormReset);
+};
+
+var onMapPinMouseUp = function () {
+  var addValue = function (selector) {
+    selector.setAttribute('value', ((SCREEN_WIDTH / 2) +
+      ' ; ' + (SCREEN_HEIGHT / 2)));
+  };
+  addValue(inputAddress);
+};
+
+
+var mapPin = document.querySelectorAll('.map__pin');
+var mapCard = document.querySelectorAll('.map__card');
+
+var hideElement = function (selector, classAdd) {
+  for (var i = 0; i < selector.length; i++) {
+    selector[i].classList.add(classAdd);
+  }
+};
+hideElement(mapCard, 'hidden');
+
+var onMapPinClick = function () {
+
+  var removeManyClass = function (selector, classDelete) {
+    for (var i = 0; i < selector.length; i++) {
+      selector[i].classList.remove(classDelete);
+    }
+  };
+  removeManyClass(mapCard, 'hidden');
+};
+
+var popupClose = document.querySelectorAll('.popup__close');
+var controlClick = function () {
+  var onButtonPopupCloseClick = function () {
+    hideElement(mapCard, 'hidden');
+  };
+
+  mapPinMain.addEventListener('click', onMapPinMainClick);
+  mapPinMain.addEventListener('mouseup', onMapPinMouseUp);
+
+  var controlClickMapPin = function () {
+    for (var i = 1; i < mapPin.length; i++) {
+      mapPin[i].addEventListener('click', onMapPinClick);
+    }
+  };
+  controlClickMapPin();
+  var controlClickPopupClose = function () {
+    for (var i = 0; i < popupClose.length; i++) {
+      popupClose[i].addEventListener('click', onButtonPopupCloseClick);
+    }
+  };
+  controlClickPopupClose();
+};
+controlClick();
+
+//  связь типа жилья и цены
+
+var adTypeSelect = document.querySelector('#type');
+var housePrise = document.querySelector('#price');
+
+var onSelectType = function () {
+  var adType = document.querySelector('#type').value;
+  switch (adType) {
+    case 'bungalo':
+      housePrise.value = '0';
+      break;
+    case 'flat':
+      housePrise.value = '1000';
+      break;
+    case 'house':
+      housePrise.value = '5000';
+      break;
+    case 'palace':
+      housePrise.value = '10000';
+      break;
+  }
+  return adType;
+};
+
+adTypeSelect.addEventListener('change', onSelectType);
+
+//  связь времени заезада и выезда
+
+var timeOutSelect = document.querySelector('#timeout');
+var timeInSelect = document.querySelector('#timein');
+
+var onSelectTimeOut = function () {
+  var timeInValue = document.querySelector('#timein').value;
+  switch (timeInValue) {
+    case '12:00':
+      timeOutSelect.value = '12:00';
+      break;
+    case '13:00':
+      timeOutSelect.value = '13:00';
+      break;
+    case '14:00':
+      timeOutSelect.value = '14:00';
+      break;
+  }
+  return timeInValue;
+};
+
+timeInSelect.addEventListener('change', onSelectTimeOut);
+
+var onSelectTimeIn = function () {
+  var timeOutValue = document.querySelector('#timeout').value;
+  switch (timeOutValue) {
+    case '12:00':
+      timeInSelect.value = '12:00';
+      break;
+    case '13:00':
+      timeInSelect.value = '13:00';
+      break;
+    case '14:00':
+      timeInSelect.value = '14:00';
+      break;
+  }
+  return timeOutValue;
+};
+
+timeOutSelect.addEventListener('change', onSelectTimeIn);
+
+var roomNumber = document.querySelector('#room_number');
+var capacity = document.querySelector('#capacity');
+
+var onSelectRoomNumber = function () {
+  var roomNumberValue = document.querySelector('#room_number').value;
+  switch (roomNumberValue) {
+    case '1':
+      capacity.value = '1';
+      capacity.options.length = 0;
+      capacity.options[capacity.options.length] = new Option('для 1 гостя', '1');
+      break;
+    case '2':
+      capacity.options.length = 0;
+      capacity.options[capacity.options.length] = new Option('для 1 гостя', '1');
+      capacity.options[capacity.options.length] = new Option('для 2 гостей', '2');
+      capacity.value = '2';
+      break;
+    case '3':
+      capacity.options.length = 0;
+      capacity.options[capacity.options.length] = new Option('для 1 гостя', '1');
+      capacity.options[capacity.options.length] = new Option('для 2 гостей', '2');
+      capacity.options[capacity.options.length] = new Option('для 3 гостей', '3');
+      capacity.value = '3';
+      break;
+    case '100':
+      capacity.options.length = 0;
+      capacity.options[capacity.options.length] = new Option('не для гостей', '0');
+      break;
+  }
+  return roomNumberValue;
+};
+
+roomNumber.addEventListener('change', onSelectRoomNumber);
