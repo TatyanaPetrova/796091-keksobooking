@@ -145,17 +145,17 @@ var buttonFormSubmit = document.querySelectorAll('.ad-form__submit');
 var buttonFormReset = document.querySelectorAll('.ad-form__reset');
 var inputAddress = document.getElementById('address');
 
-var disabledfunction = function (selector) {
+var addDisabled = function (selector) {
   for (var i = 0; i < selector.length; i++) {
     selector[i].setAttribute('disabled', 'disabled');
   }
 };
 
-disabledfunction(input);
-disabledfunction(select);
-disabledfunction(textarea);
-disabledfunction(buttonFormSubmit);
-disabledfunction(buttonFormReset);
+addDisabled(input);
+addDisabled(select);
+addDisabled(textarea);
+addDisabled(buttonFormSubmit);
+addDisabled(buttonFormReset);
 
 var mapPinMain = document.querySelector('.map__pin--main');
 var adForm = document.querySelector('.ad-form');
