@@ -191,7 +191,6 @@ var addValue = function (selector) {
 };
 addValue(inputAddress);
 
-var mapPin = document.querySelectorAll('.map__pin');
 var mapCard = document.querySelectorAll('.map__card');
 
 var hideElement = function (selector, classAdd) {
@@ -201,19 +200,13 @@ var hideElement = function (selector, classAdd) {
 };
 hideElement(mapCard, 'hidden');
 
-var popupClose = document.querySelectorAll('.popup__close');
-var onPopupCloseClick = function () {
-  hideElement(mapCard, 'hidden');
-};
-
 mapPinMain.addEventListener('click', onMapPinMainClick);
 
 mapPins.onclick = function (evt) {
   var target = evt.target.closest('button');
-  if (!target || target.className === 'map__pin--main') {
+  if (!target || target.classList.contains('map__pin--main')) {
     return;
   }
-
   var removeManyClass = function (selector, classDelete) {
     for (var i = 0; i < selector.length; i++) {
       selector[i].classList.remove(classDelete);
@@ -222,20 +215,15 @@ mapPins.onclick = function (evt) {
   removeManyClass(mapCard, 'hidden');
 };
 
+var popup = document.querySelector('.popup');
 
-//var addMapPinListener = function () {
-//  for (var i = 1; i < mapPin.length; i++) {
-//   mapPin[i].addEventListener('click', onMapPinClick);
-// }
-//};
-//addMapPinListener();
-
-var addPopupCloseListener = function () {
-  for (var i = 0; i < popupClose.length; i++) {
-    popupClose[i].addEventListener('click', onPopupCloseClick);
+popup.onclick = function (evt) {
+  var target = evt.target.closest('button');
+  if (!target) {
+    return;
   }
+  hideElement(mapCard, 'hidden');
 };
-addPopupCloseListener();
 
 //  связь типа жилья и цены
 
