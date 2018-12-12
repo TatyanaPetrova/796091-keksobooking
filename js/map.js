@@ -17,6 +17,16 @@ var MAX_ROOMS = 5;
 var MAX_GUEST = 10;
 var PIN_HEIGHT = 70;
 var PIN_WEIGHT = 50;
+var config = {
+  type: {
+    price: {
+      bungalo: 0,
+      flat: 1000,
+      house: 5000,
+      palace: 10000,
+    }
+  }
+};
 
 var copyPhotos = PHOTOS.slice();
 var map = document.querySelector('.map');
@@ -74,7 +84,7 @@ var removeClass = function (selector, classDelete) {
 var mapPins = document.querySelector('.map__pins');
 var template = document.querySelector('#pin').content.querySelector('button');
 
-var getCreatePins = function () {
+var сreatePins = function () {
   for (var i = 0; i < listData.length; i++) {
     var element = template.cloneNode(true);
 
@@ -84,14 +94,14 @@ var getCreatePins = function () {
     mapPins.appendChild(element);
   }
 };
-getCreatePins();
+сreatePins();
 
 var mapFiltersContainer = document.querySelectorAll('map__filters-container')[0];
 var templateCard = document.querySelector('#card').content.querySelector('article');
 var elementCard = templateCard.cloneNode(true);
 var firstCard = listData[0];
 
-var getCreateCards = function () {
+var сreateCards = function () {
   elementCard.querySelector('.popup__title').textContent = firstCard.offer.title;
   elementCard.querySelector('.popup__text--price').textContent = firstCard.offer.price + '₽/ночь';
   elementCard.querySelector('.popup__type').textContent = firstCard.offer.address;
@@ -103,7 +113,7 @@ var getCreateCards = function () {
   var popapPhotos = elementCard.querySelector('.popup__photos');
   var popapPhoto = elementCard.querySelector('.popup__photo');
 
-  var getCreatePhotos = function () {
+  var сreatePhotos = function () {
     for (var j = 0; j < PHOTOS.length; j++) {
       var elementPhotos = popapPhoto.cloneNode(true);
 
@@ -112,7 +122,7 @@ var getCreateCards = function () {
     }
     popapPhotos.removeChild(elementCard.querySelector('.popup__photo:nth-child(2)'));
   };
-  getCreatePhotos();
+  сreatePhotos();
 
   elementCard.querySelector('.popup__avatar').src = firstCard.author.avatar;
 
@@ -134,28 +144,28 @@ var getCreateCards = function () {
 
   map.insertBefore(elementCard, mapFiltersContainer);
 };
-getCreateCards();
+сreateCards();
 
 //  Добавляем атрибут disabled
 
 var input = document.querySelectorAll('input');
 var select = document.querySelectorAll('select');
 var textarea = document.querySelectorAll('textarea');
-var buttonFormSubmit = document.querySelectorAll('.ad-form__submit');
-var buttonFormReset = document.querySelectorAll('.ad-form__reset');
-var inputAddress = document.getElementById('address');
+var buttonFormSubmit = document.querySelector('.ad-form__submit');
+var buttonFormReset = document.querySelector('.ad-form__reset');
+var inputAddress = document.querySelector('#address');
 
-var disabledfunction = function (selector) {
+var addAttribute = function (selector, attribute) {
   for (var i = 0; i < selector.length; i++) {
-    selector[i].setAttribute('disabled', 'disabled');
+    selector[i].setAttribute(attribute, attribute);
   }
 };
 
-disabledfunction(input);
-disabledfunction(select);
-disabledfunction(textarea);
-disabledfunction(buttonFormSubmit);
-disabledfunction(buttonFormReset);
+addAttribute(input, 'disabled');
+addAttribute(select, 'disabled');
+addAttribute(textarea, 'disabled');
+addAttribute(buttonFormSubmit, 'disabled');
+addAttribute(buttonFormReset, 'disabled');
 
 var mapPinMain = document.querySelector('.map__pin--main');
 var adForm = document.querySelector('.ad-form');
@@ -164,28 +174,23 @@ var onMapPinMainClick = function () {
   removeClass(map, 'map--faded');
   removeClass(adForm, 'ad-form--disabled');
 
-  var deleteDisabled = function (selector) {
+  var deleteAttribute = function (selector) {
     for (var i = 0; i < selector.length; i++) {
       selector[i].disabled = false;
     }
   };
-  deleteDisabled(input);
-  deleteDisabled(select);
-  deleteDisabled(textarea);
-  deleteDisabled(buttonFormSubmit);
-  deleteDisabled(buttonFormReset);
+  deleteAttribute(input);
+  deleteAttribute(select);
+  deleteAttribute(textarea);
+  deleteAttribute(buttonFormSubmit);
+  deleteAttribute(buttonFormReset);
 };
-
-var onMapPinMouseUp = function () {
-  var addValue = function (selector) {
-    selector.setAttribute('value', ((SCREEN_WIDTH / 2) +
-      ' ; ' + (SCREEN_HEIGHT / 2)));
-  };
-  addValue(inputAddress);
+var addValue = function (selector) {
+  selector.setAttribute('value', ((SCREEN_WIDTH / 2) +
+    ' ; ' + (SCREEN_HEIGHT / 2)));
 };
+addValue(inputAddress);
 
-
-var mapPin = document.querySelectorAll('.map__pin');
 var mapCard = document.querySelectorAll('.map__card');
 
 var hideElement = function (selector, classAdd) {
@@ -195,8 +200,13 @@ var hideElement = function (selector, classAdd) {
 };
 hideElement(mapCard, 'hidden');
 
-var onMapPinClick = function () {
+mapPinMain.addEventListener('click', onMapPinMainClick);
 
+mapPins.onclick = function (evt) {
+  var target = evt.target.closest('button');
+  if (!target || target.classList.contains('map__pin--main')) {
+    return;
+  }
   var removeManyClass = function (selector, classDelete) {
     for (var i = 0; i < selector.length; i++) {
       selector[i].classList.remove(classDelete);
@@ -205,29 +215,15 @@ var onMapPinClick = function () {
   removeManyClass(mapCard, 'hidden');
 };
 
-var popupClose = document.querySelectorAll('.popup__close');
-var controlClick = function () {
-  var onButtonPopupCloseClick = function () {
-    hideElement(mapCard, 'hidden');
-  };
+var popup = document.querySelector('.popup');
 
-  mapPinMain.addEventListener('click', onMapPinMainClick);
-  mapPinMain.addEventListener('mouseup', onMapPinMouseUp);
-
-  var controlClickMapPin = function () {
-    for (var i = 1; i < mapPin.length; i++) {
-      mapPin[i].addEventListener('click', onMapPinClick);
-    }
-  };
-  controlClickMapPin();
-  var controlClickPopupClose = function () {
-    for (var i = 0; i < popupClose.length; i++) {
-      popupClose[i].addEventListener('click', onButtonPopupCloseClick);
-    }
-  };
-  controlClickPopupClose();
+popup.onclick = function (evt) {
+  var target = evt.target.closest('button');
+  if (!target) {
+    return;
+  }
+  hideElement(mapCard, 'hidden');
 };
-controlClick();
 
 //  связь типа жилья и цены
 
@@ -238,16 +234,16 @@ var onSelectType = function () {
   var adType = document.querySelector('#type').value;
   switch (adType) {
     case 'bungalo':
-      housePrise.value = '0';
+      housePrise.value = config.type.price.bungalo;
       break;
     case 'flat':
-      housePrise.value = '1000';
+      housePrise.value = config.type.price.flat;
       break;
     case 'house':
-      housePrise.value = '5000';
+      housePrise.value = config.type.price.house;
       break;
     case 'palace':
-      housePrise.value = '10000';
+      housePrise.value = config.type.price.palace;
       break;
   }
   return adType;
@@ -263,14 +259,14 @@ var timeInSelect = document.querySelector('#timein');
 var onSelectTimeOut = function () {
   var timeInValue = document.querySelector('#timein').value;
   switch (timeInValue) {
-    case '12:00':
-      timeOutSelect.value = '12:00';
+    case CHECKIN[0]:
+      timeOutSelect.value = CHECKOUT[0];
       break;
-    case '13:00':
-      timeOutSelect.value = '13:00';
+    case CHECKIN[1]:
+      timeOutSelect.value = CHECKOUT[1];
       break;
-    case '14:00':
-      timeOutSelect.value = '14:00';
+    case CHECKIN[2]:
+      timeOutSelect.value = CHECKOUT[2];
       break;
   }
   return timeInValue;
@@ -281,14 +277,14 @@ timeInSelect.addEventListener('change', onSelectTimeOut);
 var onSelectTimeIn = function () {
   var timeOutValue = document.querySelector('#timeout').value;
   switch (timeOutValue) {
-    case '12:00':
-      timeInSelect.value = '12:00';
+    case CHECKOUT[0]:
+      timeInSelect.value = CHECKIN[0];
       break;
-    case '13:00':
-      timeInSelect.value = '13:00';
+    case CHECKOUT[1]:
+      timeInSelect.value = CHECKIN[1];
       break;
-    case '14:00':
-      timeInSelect.value = '14:00';
+    case CHECKOUT[2]:
+      timeInSelect.value = CHECKIN[2];
       break;
   }
   return timeOutValue;
