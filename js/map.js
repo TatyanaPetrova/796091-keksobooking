@@ -17,6 +17,9 @@ var MAX_ROOMS = 5;
 var MAX_GUEST = 10;
 var PIN_HEIGHT = 70;
 var PIN_WEIGHT = 50;
+var PIN_MAIN_LOCATION_X_MIN = 0;
+var PIN_MAIN_WIDTH = 65;
+var PIN_MAIN_HEIGHT = 84;
 var config = {
   type: {
     price: {
@@ -325,3 +328,58 @@ var onSelectRoomNumber = function () {
 };
 
 roomNumber.addEventListener('change', onSelectRoomNumber);
+
+var movePin = function () {
+  mapPinMain.addEventListener('mousedown', function (evt) {
+    evt.preventDefault();
+
+    var startCoords = {
+      x: evt.clientX,
+      y: evt.clientY
+    };
+
+    var onMouseMove = function (moveEvt) {
+      moveEvt.preventDefault();
+
+      var shift = {
+        x: startCoords.x - moveEvt.clientX,
+        y: startCoords.y - moveEvt.clientY
+      };
+
+      startCoords = {
+        x: moveEvt.clientX,
+        y: moveEvt.clientY
+      };
+      var finishCoordsX = (mapPinMain.offsetLeft - shift.x);
+      var finishCoordsY = (mapPinMain.offsetTop - shift.y);
+
+      var correctCoordX = finishCoordsX > PIN_MAIN_LOCATION_X_MIN - PIN_MAIN_WIDTH / 2 && finishCoordsX < SCREEN_WIDTH - PIN_MAIN_WIDTH / 2;
+
+      var correctCoordY = finishCoordsY > REFERENCE_POINT_HEIGHT - PIN_MAIN_HEIGHT && finishCoordsY < SCREEN_HEIGHT - PIN_MAIN_HEIGHT;
+
+      if (correctCoordX) {
+        mapPinMain.style.left = finishCoordsX + 'px';
+        var inputAdressCoordX = finishCoordsX;
+      }
+
+      if (correctCoordY) {
+        mapPinMain.style.top = finishCoordsY + 'px';
+        var inputAdressCoordY = finishCoordsY;
+      }
+
+      inputAddress.value = (inputAdressCoordX + ' ; ' + inputAdressCoordY);
+
+    };
+    var onMouseUp = function (upEvt) {
+      upEvt.preventDefault();
+
+      document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseup', onMouseUp);
+    };
+
+
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
+  });
+};
+movePin();
