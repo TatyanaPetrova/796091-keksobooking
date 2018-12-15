@@ -350,7 +350,7 @@ var movePin = function () {
         var inputAdressCoordX = finishCoordsX;
         mapPinMain.style.top = finishCoordsY + 'px';
         var inputAdressCoordY = finishCoordsY;
-        inputAddress.value = (inputAdressCoordX + PIN_MAIN_WIDTH / 2 + ' ; ' + (inputAdressCoordY + PIN_MAIN_HEIGHT));
+        inputAddress.value = ('"' + (inputAdressCoordX + PIN_MAIN_WIDTH / 2) + ' , ' + (inputAdressCoordY + PIN_MAIN_HEIGHT) + '"');
       }
     };
     var onMouseUp = function (upEvt) {
