@@ -177,8 +177,8 @@ var onMapPinMainClick = function () {
   deleteAttribute(buttonFormReset);
 };
 var addValue = function (selector) {
-  selector.setAttribute('value', ((SCREEN_WIDTH / 2) +
-    ' ; ' + (SCREEN_HEIGHT / 2)));
+  selector.setAttribute('value', ('"' + (SCREEN_WIDTH / 2) +
+    ' , ' + (SCREEN_HEIGHT / 2) + '"'));
 };
 addValue(inputAddress);
 
