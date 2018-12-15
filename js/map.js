@@ -18,8 +18,8 @@ var MAX_GUEST = 10;
 var PIN_HEIGHT = 70;
 var PIN_WEIGHT = 50;
 var PIN_MAIN_LOCATION_X_MIN = 0;
-var PIN_MAIN_WIDTH = 65;
-var PIN_MAIN_HEIGHT = 65;
+var PIN_MAIN_WIDTH = 66;
+var PIN_MAIN_HEIGHT = 66;
 var config = {
   type: {
     price: {
@@ -350,7 +350,7 @@ var movePin = function () {
         var inputAdressCoordX = finishCoordsX;
         mapPinMain.style.top = finishCoordsY + 'px';
         var inputAdressCoordY = finishCoordsY;
-        inputAddress.value = (inputAdressCoordX + ' ; ' + inputAdressCoordY);
+        inputAddress.value = (inputAdressCoordX + PIN_MAIN_WIDTH / 2 + ' ; ' + (inputAdressCoordY + PIN_MAIN_HEIGHT));
       }
     };
     var onMouseUp = function (upEvt) {
