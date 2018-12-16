@@ -17,6 +17,9 @@ var MAX_ROOMS = 5;
 var MAX_GUEST = 10;
 var PIN_HEIGHT = 70;
 var PIN_WEIGHT = 50;
+var PIN_MAIN_LOCATION_X_MIN = 0;
+var PIN_MAIN_WIDTH = 66;
+var PIN_MAIN_HEIGHT = 66;
 var config = {
   type: {
     price: {
@@ -83,18 +86,6 @@ var removeClass = function (selector, classDelete) {
 
 var mapPins = document.querySelector('.map__pins');
 var template = document.querySelector('#pin').content.querySelector('button');
-
-var сreatePins = function () {
-  for (var i = 0; i < listData.length; i++) {
-    var element = template.cloneNode(true);
-
-    element.style.left = listData[i].location.x - PIN_WEIGHT / 2 + 'px';
-    element.style.top = listData[i].location.y + PIN_HEIGHT + 'px';
-    element.querySelector('img').src = listData[i].author.avatar;
-    mapPins.appendChild(element);
-  }
-};
-сreatePins();
 
 var mapFiltersContainer = document.querySelectorAll('map__filters-container')[0];
 var templateCard = document.querySelector('#card').content.querySelector('article');
@@ -186,8 +177,8 @@ var onMapPinMainClick = function () {
   deleteAttribute(buttonFormReset);
 };
 var addValue = function (selector) {
-  selector.setAttribute('value', ((SCREEN_WIDTH / 2) +
-    ' ; ' + (SCREEN_HEIGHT / 2)));
+  selector.setAttribute('value', ('"' + (SCREEN_WIDTH / 2) +
+    ' , ' + (SCREEN_HEIGHT / 2) + '"'));
 };
 addValue(inputAddress);
 
@@ -325,3 +316,65 @@ var onSelectRoomNumber = function () {
 };
 
 roomNumber.addEventListener('change', onSelectRoomNumber);
+
+var movePin = function () {
+  mapPinMain.addEventListener('mousedown', function (evt) {
+    evt.preventDefault();
+
+    var startCoords = {
+      x: evt.clientX,
+      y: evt.clientY
+    };
+
+    var onMouseMove = function (moveEvt) {
+      moveEvt.preventDefault();
+
+      var shift = {
+        x: startCoords.x - moveEvt.clientX,
+        y: startCoords.y - moveEvt.clientY
+      };
+
+      startCoords = {
+        x: moveEvt.clientX,
+        y: moveEvt.clientY
+      };
+      var finishCoordsX = (mapPinMain.offsetLeft - shift.x);
+      var finishCoordsY = (mapPinMain.offsetTop - shift.y);
+
+      var correctCoordX = finishCoordsX >= PIN_MAIN_LOCATION_X_MIN - PIN_MAIN_WIDTH / 2 && finishCoordsX <= SCREEN_WIDTH - PIN_MAIN_WIDTH / 2;
+
+      var correctCoordY = finishCoordsY >= REFERENCE_POINT_HEIGHT - PIN_MAIN_HEIGHT && finishCoordsY <= SCREEN_HEIGHT - PIN_MAIN_HEIGHT;
+
+      if (correctCoordX && correctCoordY) {
+        mapPinMain.style.left = finishCoordsX + 'px';
+        var inputAdressCoordX = finishCoordsX;
+        mapPinMain.style.top = finishCoordsY + 'px';
+        var inputAdressCoordY = finishCoordsY;
+        inputAddress.value = ('"' + (inputAdressCoordX + PIN_MAIN_WIDTH / 2) + ' , ' + (inputAdressCoordY + PIN_MAIN_HEIGHT) + '"');
+      }
+    };
+    var onMouseUp = function (upEvt) {
+      upEvt.preventDefault();
+
+      document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseup', onMouseUp);
+
+      var сreatePins = function () {
+        for (var i = 0; i < listData.length; i++) {
+          var element = template.cloneNode(true);
+
+          element.style.left = listData[i].location.x - PIN_WEIGHT / 2 + 'px';
+          element.style.top = listData[i].location.y + PIN_HEIGHT + 'px';
+          element.querySelector('img').src = listData[i].author.avatar;
+          mapPins.appendChild(element);
+        }
+      };
+      сreatePins();
+    };
+
+
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
+  });
+};
+movePin();
