@@ -127,6 +127,14 @@
 
   roomNumber.addEventListener('change', onSelectRoomNumber);
 
+  //  Отправка формы
+
+  var onbuttonFormSubmit = function () {
+    var formData = new FormData(adForm);
+    window.backend.postData(formData);
+  };
+  buttonFormSubmit.addEventListener('click', onbuttonFormSubmit);
+
   window.form = {
     adForm: adForm,
     input: input,

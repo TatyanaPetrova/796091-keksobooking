@@ -22,15 +22,17 @@
     if (!target || target.classList.contains('map__pin--main')) {
       return;
     }
+    window.card.сreateCards(target.value - 1);
     window.helpers.removeManyClass(mapCard, 'hidden');
+    var popupClose = document.querySelector('.popup__close');
+    var popup = document.querySelector('.popup');
+    var onButtonCloseClick = function () {
+      popup.classList.add('hidden');
+    };
+    popupClose.addEventListener('click', onButtonCloseClick);
   };
-  var popup = document.querySelector('.popup');
 
-  popup.onclick = function (evt) {
-    var target = evt.target.closest('button');
-    if (!target) {
-      return;
-    }
-    window.helpers.hideElement(mapCard, 'hidden');
+  window.map = {
+    mapPins: mapPins,
   };
 })();

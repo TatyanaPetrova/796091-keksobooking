@@ -6,16 +6,22 @@
   var mapPins = document.querySelector('.map__pins');
   var mapPinMain = document.querySelector('.map__pin--main');
   var template = document.querySelector('#pin').content.querySelector('button');
-  var сreatePins = function () {
-    for (var i = 0; i < window.data.listData.length; i++) {
+  var сreatePins = function (data) {
+    for (var i = 0; i < data.length; i++) {
       var element = template.cloneNode(true);
 
-      element.style.left = window.data.listData[i].location.x - window.data.PIN_WEIGHT / 2 + 'px';
-      element.style.top = window.data.listData[i].location.y + window.data.PIN_HEIGHT + 'px';
-      element.querySelector('img').src = window.data.listData[i].author.avatar;
+      element.style.left = data[i].location.x - window.data.PIN_WEIGHT / 2 + 'px';
+      element.style.top = data[i].location.y + window.data.PIN_HEIGHT + 'px';
+      element.querySelector('img').src = data[i].author.avatar;
       mapPins.appendChild(element);
+      var mapPin = document.querySelectorAll('.map__pin');
+      for (var j = 0; j < mapPin.length; j++) {
+        window.helpers.addValue(mapPin[j], j);
+      }
     }
+    window.data.listData = data;
   };
+
   var movePin = function () {
     mapPinMain.addEventListener('mousedown', function (evt) {
       evt.preventDefault();
@@ -57,9 +63,8 @@
 
         document.removeEventListener('mousemove', onMouseMove);
         document.removeEventListener('mouseup', onMouseUp);
-        сreatePins();
+        window.backend.load(сreatePins);
       };
-
       document.addEventListener('mousemove', onMouseMove);
       document.addEventListener('mouseup', onMouseUp);
     });
@@ -67,5 +72,6 @@
   movePin();
   window.pin = {
     mapPinMain: mapPinMain,
+    mapPins: mapPins
   };
 })();
