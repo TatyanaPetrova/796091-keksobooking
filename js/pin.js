@@ -3,6 +3,7 @@
   var PIN_MAIN_LOCATION_X_MIN = 0;
   var PIN_MAIN_WIDTH = 66;
   var PIN_MAIN_HEIGHT = 66;
+  var loaded = false;
   var mapPins = document.querySelector('.map__pins');
   var mapPinMain = document.querySelector('.map__pin--main');
   var template = document.querySelector('#pin').content.querySelector('button');
@@ -63,7 +64,10 @@
 
         document.removeEventListener('mousemove', onMouseMove);
         document.removeEventListener('mouseup', onMouseUp);
-        window.backend.load(сreatePins);
+        if (!loaded) {
+          window.backend.load(сreatePins);
+          loaded = true;
+        }
       };
       document.addEventListener('mousemove', onMouseMove);
       document.addEventListener('mouseup', onMouseUp);

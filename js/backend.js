@@ -6,10 +6,6 @@
 
   var load = function (onLoad, onError) {
     var xhr = new XMLHttpRequest();
-    xhr.open('GET', getURL);
-    xhr.send();
-    xhr.timeout = 10000; // 10s
-
     xhr.responseType = 'json';
     xhr.addEventListener('load', function () {
       switch (xhr.status) {
@@ -27,15 +23,28 @@
     xhr.addEventListener('timeout', function () {
       onError('Запрос не успел выполниться за ' + xhr.timeout + 'мс');
     });
+    xhr.open('GET', getURL);
+    xhr.send();
+    xhr.timeout = 10000; // 10s
   };
 
-  var postData = function (data, onLoad, onError) {
+  var upLoad = function (data, onLoad, onError) {
     var xhr = new XMLHttpRequest();
+
+    xhr.addEventListener('load', function () {
+      switch (xhr.status) {
+        case 200:
+          onLoad(xhr.response);
+          break;
+        default:
+          onError('Cтатус ответа' + xhr.status + ' ' + xhr.statusText);
+      }
+    });
     xhr.open('POST', postURL);
     xhr.send(data);
   };
   window.backend = {
     load: load,
-    postData: postData,
+    upLoad: upLoad,
   };
 })();

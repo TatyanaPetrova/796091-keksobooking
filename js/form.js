@@ -129,11 +129,12 @@
 
   //  Отправка формы
 
-  var onbuttonFormSubmit = function () {
+  var onbuttonFormSubmit = function (evt) {
+    evt.preventDefault();
     var formData = new FormData(adForm);
-    window.backend.postData(formData);
+    window.backend.upLoad(formData);
   };
-  buttonFormSubmit.addEventListener('click', onbuttonFormSubmit);
+  buttonFormSubmit.addEventListener('submit', onbuttonFormSubmit);
 
   window.form = {
     adForm: adForm,

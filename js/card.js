@@ -19,16 +19,16 @@
     var popapPhoto = elementCard.querySelector('.popup__photo');
 
     var сreatePhotos = function () {
-      for (var j = 0; j < window.data.namberPhotos; j++) {
+      for (var j = 0; j < firstCard.offer.photos.length; j++) {
         var elementPhotos = popapPhoto.cloneNode(true);
 
         popapPhotos.appendChild(elementPhotos);
-        elementCard.querySelector('.popup__photo').src = firstCard.offer.photos;
+        elementCard.querySelector('.popup__photo').src = firstCard.offer.photos[j];
       }
       popapPhotos.removeChild(elementCard.querySelector('.popup__photo:nth-child(2)'));
     };
-    сreatePhotos();
 
+    сreatePhotos();
     elementCard.querySelector('.popup__avatar').src = firstCard.author.avatar;
 
     var getType = function () {
@@ -46,7 +46,6 @@
     };
 
     elementCard.querySelector('.popup__text--address').textContent = getType();
-
     map.insertBefore(elementCard, mapFiltersContainer);
   };
   window.card = {
