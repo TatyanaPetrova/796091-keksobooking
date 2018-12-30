@@ -1,5 +1,6 @@
 'use strict';
 (function () {
+  var SUCCESS = 200;
   var getURL = 'https://js.dump.academy/keksobooking/data';
   var postURL = 'https://js.dump.academy/keksobooking';
 
@@ -9,7 +10,7 @@
     xhr.responseType = 'json';
     xhr.addEventListener('load', function () {
       switch (xhr.status) {
-        case 200:
+        case SUCCESS:
           onLoad(xhr.response);
           break;
         default:
@@ -33,7 +34,7 @@
 
     xhr.addEventListener('load', function () {
       switch (xhr.status) {
-        case 200:
+        case SUCCESS:
           onLoad(xhr.response);
           break;
         default:
