@@ -17,7 +17,8 @@
 
   mapPins.onclick = function (evt) {
     var target = evt.target.closest('button');
-    if (!target || target.classList.contains('.map__pin--main')) {
+    var buttonMain = document.querySelector('.map__pin--main');
+    if (!target || target === buttonMain) {
       return;
     }
     window.card.сreateCards(target.value - 1);

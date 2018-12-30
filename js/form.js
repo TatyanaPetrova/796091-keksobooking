@@ -26,6 +26,7 @@
     window.helpers.addAttribute(buttonFormSubmit, 'disabled');
     window.helpers.addAttribute(buttonFormReset, 'disabled');
   };
+  addFormAttributeDisabled();
   window.helpers.addValue(inputAddress, ('"' + (window.data.SCREEN_WIDTH / 2) +
     ' , ' + (window.data.SCREEN_HEIGHT / 2) + '"'));
   //  связь типа жилья и цены
