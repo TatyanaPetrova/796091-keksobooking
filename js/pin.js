@@ -14,13 +14,6 @@
       element.style.left = data[i].location.x - window.data.PIN_WEIGHT / 2 + 'px';
       element.style.top = data[i].location.y + window.data.PIN_HEIGHT + 'px';
       element.querySelector('img').src = data[i].author.avatar;
-      //   var avatar = element.querySelector('img');
-      // if (avatar.src === 'http://127.0.0.1:50951/img/avatars/default.png') {
-      //  var button = document.querySelector('button').contains(avatar);
-      //  if (!button) {
-      // button.parentNode.removeChild(button);
-      //   }
-      //  }
       mapPins.appendChild(element);
       var mapPin = document.querySelectorAll('.map__pin');
       for (var j = 0; j < mapPin.length; j++) {

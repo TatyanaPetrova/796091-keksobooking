@@ -8,7 +8,7 @@
     window.helpers.deleteAttribute(window.form.input);
     window.helpers.deleteAttribute(window.form.select);
     window.helpers.deleteAttribute(window.form.textarea);
-    window.helpers.deleteAttribute(window.form.buttonFormSubmi);
+    window.form.buttonFormSubmi.disabled = false;
     window.helpers.deleteAttribute(window.form.buttonFormReset);
   };
   window.helpers.addValue(document.querySelector('#address'), ((window.data.SCREEN_WIDTH / 2) +

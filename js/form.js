@@ -22,7 +22,7 @@
   var addFormAttributeDisabled = function () {
     window.helpers.addAttribute(input, 'disabled');
     window.helpers.addAttribute(select, 'disabled');
-    window.helpers.addAttribute(textarea, 'disabled');
+    buttonFormSubmit.setAttribute('disabled', 'disabled');
     window.helpers.addAttribute(buttonFormSubmit, 'disabled');
     window.helpers.addAttribute(buttonFormReset, 'disabled');
   };
@@ -137,6 +137,7 @@
     addFormAttributeDisabled();
     map.classList.add('map--faded');
     adForm.classList.add('ad-form--disabled');
+
     var successMessage = document.querySelector('#success').content.querySelector('div');
     body.insertBefore(successMessage, main);
     var onSuccessMessageClick = function () {
