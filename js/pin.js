@@ -76,6 +76,7 @@
   movePin();
   window.pin = {
     mapPinMain: mapPinMain,
-    mapPins: mapPins
+    mapPins: mapPins,
+    createPins: сreatePins,
   };
 })();

@@ -40,7 +40,6 @@
               });
             };
             removePins();
-            console.log(adRoomFilter);
             window.pin.createPins(adRoomFilter);
           }
         }
