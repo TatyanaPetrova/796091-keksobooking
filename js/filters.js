@@ -10,39 +10,38 @@
 
   function disableFiltersForm(selector) {
     selector.setAttribute('disabled', 'disabled');
-  }
+  };
+
   // disableFiltersForm(housingType);
   // disableFiltersForm(housingFeatures);
   //disableFiltersForm(housingGuests);
   //disableFiltersForm(housingPrice);
   // disableFiltersForm(housingRooms);
-  var adDataArray = [];
+
   // Копируем данные в массив
-  var successHandler = function () {
-    adDataArray.push.apply(adDataArray, window.data.listData);
+  var adDataArray = window.data.listData.slice(0);
+  //Функция фильтрации массива
+  var getArrayFiltredRooms = function (it) {
+    var filterRooms = adDataArray.filter(function (item) {
+      return (item.offer.rooms === it);
+    });
+    console.log(filterRooms);
   };
-  successHandler();
+
+  var removePins = function () {
+    var pins = document.querySelectorAll('.map__pin:not(.map__pin--main)');
+    pins.forEach(function (pin) {
+      pin.remove();
+    });
+  };
+
   var onSelectRooms = function () {
     var rooms = document.querySelector('#housing-rooms').value;
     switch (rooms) {
       case '1':
-        for (var i = 0; i < adDataArray.length; i++) {
-          if (adDataArray[i].offer.rooms === 1) {
-            console.log(adDataArray[i]);
-            var adRoomFilter = [];
-            adRoomFilter.push(adDataArray[i]);
-            console.log(adRoomFilter);
-
-            var removePins = function () {
-              var pins = document.querySelectorAll('.map__pin:not(.map__pin--main)');
-              pins.forEach(function (pin) {
-                pin.remove();
-              });
-            };
-            removePins();
-            window.pin.createPins(adRoomFilter);
-          }
-        }
+        getArrayFiltredRooms(1);
+        removePins();
+        window.pin.createPins(getArrayFiltredRooms(1));
     }
   };
   housingRooms.addEventListener('change', onSelectRooms);
