@@ -18,10 +18,18 @@
     var createFeatures = function () {
       var popupFeatures = templateCard.querySelector('.popup__features');
       popupFeatures.innerHTML = '';
-      for (var i = 0; i < firstCard.offer.features.length; i++) {
+      if (Array.isArray(firstCard.offer.features)) {
+        for (var i = 0; i < firstCard.offer.features.length; i++) {
+          var elementFeature = document.createElement('li');
+          elementFeature.classList.add('popup__feature');
+          var className = firstCard.offer.features[i];
+          elementFeature.classList.add('popup__feature--' + className);
+          popupFeatures.appendChild(elementFeature);
+        }
+      } else {
         var elementFeature = document.createElement('li');
         elementFeature.classList.add('popup__feature');
-        var className = firstCard.offer.features[i];
+        var className = firstCard.offer.features;
         elementFeature.classList.add('popup__feature--' + className);
         popupFeatures.appendChild(elementFeature);
       }
