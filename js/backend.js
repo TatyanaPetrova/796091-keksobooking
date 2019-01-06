@@ -1,6 +1,7 @@
 'use strict';
 (function () {
   var SUCCESS = 200;
+  var TIMEOUT = 10000;
   var getURL = 'https://js.dump.academy/keksobooking/data';
   var postURL = 'https://js.dump.academy/keksobooking';
 
@@ -26,7 +27,7 @@
     });
     xhr.open('GET', getURL);
     xhr.send();
-    xhr.timeout = 10000; // 10s
+    xhr.timeout = TIMEOUT; // 10s
   };
 
   var upLoad = function (data, onLoad, onError) {

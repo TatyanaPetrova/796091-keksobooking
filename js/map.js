@@ -4,12 +4,13 @@
   var onMapPinMainClick = function () {
     window.helpers.removeClass(window.card.map, 'map--faded');
     window.helpers.removeClass(window.form.adForm, 'ad-form--disabled');
+    window.helpers.deleteAttributeForOneElement(window.filters.housingFeatures);
+    window.helpers.deleteAttribute(window.form.inputs);
+    window.helpers.deleteAttribute(window.form.selects);
+    window.helpers.deleteAttributeForOneElement(window.form.textarea);
 
-    window.helpers.deleteAttribute(window.form.input);
-    window.helpers.deleteAttribute(window.form.select);
-    window.helpers.deleteAttribute(window.form.textarea);
-    window.form.buttonFormSubmi.disabled = false;
-    window.helpers.deleteAttribute(window.form.buttonFormReset);
+    window.helpers.deleteAttributeForOneElement(window.form.buttonFormSubmi);
+    window.helpers.deleteAttributeForOneElement(window.form.buttonFormReset);
   };
   window.helpers.addValue(document.querySelector('#address'), ((window.data.SCREEN_WIDTH / 2) +
     ' ; ' + (window.data.SCREEN_HEIGHT / 2)));
@@ -21,7 +22,6 @@
     if (!target || target === buttonMain) {
       return;
     }
-    console.log(evt.target);
     window.card.сreateCards(target.value - 1);
     var mapCard = document.querySelector('.map__card');
     var popupClose = document.querySelector('.popup__close');

@@ -7,7 +7,9 @@
   var popapPhotos = templateCard.querySelector('.popup__photos');
   var popapPhoto = templateCard.querySelector('.popup__photo');
   var сreateCards = function (index) {
-    var firstCard = window.data.listData[index];
+    var firstCard = window.data.filteredListData ?
+      window.data.filteredListData[index] :
+      window.data.listData[index];
     templateCard.querySelector('.popup__title').textContent = firstCard.offer.title;
     templateCard.querySelector('.popup__text--price').textContent = firstCard.offer.price + '₽/ночь';
     templateCard.querySelector('.popup__type').textContent = firstCard.offer.address;
@@ -18,20 +20,20 @@
     var createFeatures = function () {
       var popupFeatures = templateCard.querySelector('.popup__features');
       popupFeatures.innerHTML = '';
-      if (Array.isArray(firstCard.offer.features)) {
-        for (var i = 0; i < firstCard.offer.features.length; i++) {
-          var elementFeature = document.createElement('li');
-          elementFeature.classList.add('popup__feature');
-          var className = firstCard.offer.features[i];
-          elementFeature.classList.add('popup__feature--' + className);
-          popupFeatures.appendChild(elementFeature);
-        }
-      } else {
+
+      function createElementFeature(featureItem) {
         var elementFeature = document.createElement('li');
         elementFeature.classList.add('popup__feature');
-        var className = firstCard.offer.features;
+        var className = featureItem;
         elementFeature.classList.add('popup__feature--' + className);
         popupFeatures.appendChild(elementFeature);
+      }
+      if (Array.isArray(firstCard.offer.features)) {
+        for (var i = 0; i < firstCard.offer.features.length; i++) {
+          createElementFeature(firstCard.offer.features[i]);
+        }
+      } else {
+        createElementFeature(firstCard.offer.features);
       }
     };
     createFeatures();

@@ -11,20 +11,20 @@
     }
   };
   var map = document.querySelector('.map');
-  var input = document.querySelectorAll('input');
-  var select = document.querySelectorAll('select');
-  var textarea = document.querySelectorAll('textarea');
+  var inputs = document.querySelectorAll('input');
+  var selects = document.querySelectorAll('select');
+  var textarea = document.querySelector('textarea');
   var buttonFormSubmit = document.querySelector('.ad-form__submit');
   var buttonFormReset = document.querySelector('.ad-form__reset');
   var inputAddress = document.querySelector('#address');
   var adForm = document.querySelector('.ad-form');
 
   var addFormAttributeDisabled = function () {
-    window.helpers.addAttribute(input, 'disabled');
-    window.helpers.addAttribute(select, 'disabled');
-    buttonFormSubmit.setAttribute('disabled', 'disabled');
-    window.helpers.addAttribute(buttonFormSubmit, 'disabled');
-    window.helpers.addAttribute(buttonFormReset, 'disabled');
+    window.helpers.addAttribute(inputs, 'disabled');
+    window.helpers.addAttribute(selects, 'disabled');
+    window.helpers.addAttributeForOneElement(buttonFormSubmit, 'disabled');
+    window.helpers.addAttributeForOneElement(buttonFormReset, 'disabled');
+    window.helpers.addAttributeForOneElement(textarea, 'disabled');
   };
   addFormAttributeDisabled();
   window.helpers.addValue(inputAddress, ('"' + (window.data.SCREEN_WIDTH / 2) +
@@ -165,8 +165,8 @@
 
   window.form = {
     adForm: adForm,
-    input: input,
-    select: select,
+    inputs: inputs,
+    selects: selects,
     textarea: textarea,
     buttonFormSubmi: buttonFormSubmit,
     buttonFormReset: buttonFormReset,
