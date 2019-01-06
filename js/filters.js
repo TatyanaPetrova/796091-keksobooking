@@ -13,8 +13,6 @@
   }
 
   // Копируем данные в массив
-  var adDataArray = window.data.listData.slice(0);
-  console.log(adDataArray);
 
   var removePins = function () {
     var pins = document.querySelectorAll('.map__pin:not(.map__pin--main)');
@@ -36,7 +34,10 @@
     }
   };
 
-  var getFeatures = function (ad, ar) {
+ /* var getFeatures = function (ad, ar) {
+    if (!ar.length) {
+      return true
+    }
     for (var i = 0; i < ar.length; i++) {
       switch (ar[i].value) {
         case 'wifi':
@@ -56,8 +57,11 @@
       }
     }
   };
+  console.log(getFeatures());
+  */
 
   function getFilteredArray() {
+    var adDataArray = window.data.listData.slice(0);
     var roomsValue = housingRooms.value;
     var houseTypeValue = housingType.value;
     var housePriceValue = housingPrice.value;
@@ -67,18 +71,19 @@
       return (roomsValue === 'any' ? true : item.offer.rooms == roomsValue) &&
         (housePriceValue === 'any' ? true :
           getPrice(item)) &&
-        (houseTypeValue === 'any' ? true : item.offer.type == houseTypeValue) && (houseGuestsValue === 'any' ? true : item.offer.guests == houseGuestsValue) && (getFeatures(item, checkedFeatures));
+        (houseTypeValue === 'any' ? true : item.offer.type == houseTypeValue) && (houseGuestsValue === 'any' ? true : item.offer.guests == houseGuestsValue);//(getFeatures(item, checkedFeatures));
     });
     return filteredArray;
   }
 
-  mapFilters.onclick = function (evt) {
+  mapFilters.onchange = function (evt) {
     var target = evt.target;
     if (target.tagName === 'FORM') {
       return;
     }
     removePins();
     window.pin.createPins(getFilteredArray());
+    console.log(getFilteredArray());
   };
 
   window.filters = {

@@ -20,7 +20,11 @@
         window.helpers.addValue(mapPin[j], j);
       }
     }
+  };
+
+  var onLoadSuccess = function (data) {
     window.data.listData = data;
+    сreatePins(data);
   };
 
   var movePin = function () {
@@ -65,7 +69,7 @@
         document.removeEventListener('mousemove', onMouseMove);
         document.removeEventListener('mouseup', onMouseUp);
         if (!loaded) {
-          window.backend.load(сreatePins);
+          window.backend.load(onLoadSuccess);
           loaded = true;
         }
       };

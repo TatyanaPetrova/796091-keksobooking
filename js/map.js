@@ -21,6 +21,7 @@
     if (!target || target === buttonMain) {
       return;
     }
+    console.log(evt.target);
     window.card.сreateCards(target.value - 1);
     var mapCard = document.querySelector('.map__card');
     var popupClose = document.querySelector('.popup__close');
