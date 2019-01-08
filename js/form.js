@@ -10,20 +10,23 @@
       }
     }
   };
-  var input = document.querySelectorAll('input');
-  var select = document.querySelectorAll('select');
-  var textarea = document.querySelectorAll('textarea');
+  var map = document.querySelector('.map');
+  var inputs = document.querySelectorAll('input');
+  var selects = document.querySelectorAll('select');
+  var textarea = document.querySelector('textarea');
   var buttonFormSubmit = document.querySelector('.ad-form__submit');
   var buttonFormReset = document.querySelector('.ad-form__reset');
   var inputAddress = document.querySelector('#address');
   var adForm = document.querySelector('.ad-form');
 
-  window.helpers.addAttribute(input, 'disabled');
-  window.helpers.addAttribute(select, 'disabled');
-  window.helpers.addAttribute(textarea, 'disabled');
-  window.helpers.addAttribute(buttonFormSubmit, 'disabled');
-  window.helpers.addAttribute(buttonFormReset, 'disabled');
-
+  var addFormAttributeDisabled = function () {
+    window.helpers.addAttribute(inputs, 'disabled');
+    window.helpers.addAttribute(selects, 'disabled');
+    window.helpers.addAttributeForOneElement(buttonFormSubmit, 'disabled');
+    window.helpers.addAttributeForOneElement(buttonFormReset, 'disabled');
+    window.helpers.addAttributeForOneElement(textarea, 'disabled');
+  };
+  addFormAttributeDisabled();
   window.helpers.addValue(inputAddress, ('"' + (window.data.SCREEN_WIDTH / 2) +
     ' , ' + (window.data.SCREEN_HEIGHT / 2) + '"'));
   //  связь типа жилья и цены
@@ -127,10 +130,43 @@
 
   roomNumber.addEventListener('change', onSelectRoomNumber);
 
+  //  Отправка формы
+  var main = document.querySelector('main');
+  var body = document.querySelector('body');
+  var onSuccess = function () {
+    addFormAttributeDisabled();
+    map.classList.add('map--faded');
+    adForm.classList.add('ad-form--disabled');
+
+    var successMessage = document.querySelector('#success').content.querySelector('div');
+    body.insertBefore(successMessage, main);
+    var onSuccessMessageClick = function () {
+      body.removeChild(successMessage);
+    };
+    body.addEventListener('click', onSuccessMessageClick);
+  };
+
+  var onError = function () {
+    var errorMessage = document.querySelector('#error').content.querySelector('div');
+    body.insertBefore(errorMessage, main);
+    var onErrorMessageClick = function () {
+      body.removeChild(errorMessage);
+    };
+    body.addEventListener('click', onErrorMessageClick);
+  };
+
+  adForm.addEventListener('submit', function (evt) {
+    evt.preventDefault();
+    var formData = new FormData(adForm);
+    window.backend.upLoad(formData, onSuccess, onError);
+    adForm.reset();
+
+  });
+
   window.form = {
     adForm: adForm,
-    input: input,
-    select: select,
+    inputs: inputs,
+    selects: selects,
     textarea: textarea,
     buttonFormSubmi: buttonFormSubmit,
     buttonFormReset: buttonFormReset,

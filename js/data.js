@@ -68,7 +68,7 @@
 
   var listData = generateOfferList();
   window.data = {
-    listData: listData,
+    listdata: listData,
     namberPhotos: numberPhotos,
     SCREEN_WIDTH: SCREEN_WIDTH,
     SCREEN_HEIGHT: SCREEN_HEIGHT,
