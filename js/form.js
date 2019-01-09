@@ -133,10 +133,22 @@
   //  Отправка формы
   var main = document.querySelector('main');
   var body = document.querySelector('body');
+
   var onSuccess = function () {
     addFormAttributeDisabled();
     map.classList.add('map--faded');
     adForm.classList.add('ad-form--disabled');
+    window.card.removeCard();
+    window.pin.mapPinMain.style.left = window.pin.PIN_COORD_LEFT_DEFAULT;
+    window.pin.mapPinMain.style.top = window.pin.PIN_COORD_TOP_DEFAULT;
+    var hiddenPins = function () {
+      var pins = document.querySelectorAll('.map__pin:not(.map__pin--main)');
+      pins.forEach(function (pin) {
+        pin.classList.add('hidden');
+      });
+    };
+    hiddenPins();
+
 
     var successMessage = document.querySelector('#success').content.querySelector('div');
     body.insertBefore(successMessage, main);

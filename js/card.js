@@ -1,11 +1,18 @@
 'use strict';
 
 (function () {
+  var ESC_KEYCODE = 27;
   var map = document.querySelector('.map');
   var mapFiltersContainer = document.querySelector('map__filters-container');
   var templateCard = document.querySelector('#card').content.querySelector('article');
   var popapPhotos = templateCard.querySelector('.popup__photos');
   var popapPhoto = templateCard.querySelector('.popup__photo');
+  var removeCard = function () {
+    var oldCard = document.querySelector('.map__card');
+    if (oldCard) {
+      oldCard.parentNode.removeChild(oldCard);
+    }
+  };
   var сreateCards = function (index) {
     var firstCard = window.data.filteredListData ?
       window.data.filteredListData[index] :
@@ -65,14 +72,13 @@
 
     templateCard.querySelector('.popup__text--address').textContent = getType();
     var elementCard = templateCard.cloneNode(true);
-    var oldCard = document.querySelector('.map__card');
-    if (oldCard) {
-      oldCard.parentNode.removeChild(oldCard);
-    }
+    removeCard();
+
     map.insertBefore(elementCard, mapFiltersContainer);
   };
   window.card = {
     map: map,
     сreateCards: сreateCards,
+    removeCard: removeCard,
   };
 })();

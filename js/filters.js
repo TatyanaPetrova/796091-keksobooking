@@ -94,5 +94,6 @@
   window.filters = {
     mapFilters: mapFilters,
     housingFeatures: housingFeatures,
+    removePins: removePins,
   };
 })();

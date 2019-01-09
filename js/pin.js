@@ -1,6 +1,8 @@
 'use strict';
 (function () {
   var PIN_MAIN_LOCATION_X_MIN = 0;
+  var PIN_COORD_LEFT_DEFAULT = '570' + 'px';
+  var PIN_COORD_TOP_DEFAULT = '385' + 'px';
   var PIN_MAIN_WIDTH = 66;
   var PIN_MAIN_HEIGHT = 66;
   var loaded = false;
@@ -72,6 +74,13 @@
           window.backend.load(onLoadSuccess);
           loaded = true;
         }
+        var showPins = function () {
+          var pins = document.querySelectorAll('.map__pin:not(.map__pin--main)');
+          pins.forEach(function (pin) {
+            pin.classList.remove('hidden');
+          });
+        };
+        showPins();
       };
       document.addEventListener('mousemove', onMouseMove);
       document.addEventListener('mouseup', onMouseUp);
@@ -82,5 +91,8 @@
     mapPinMain: mapPinMain,
     mapPins: mapPins,
     createPins: сreatePins,
+    movePin: movePin,
+    PIN_COORD_LEFT_DEFAULT: PIN_COORD_LEFT_DEFAULT,
+    PIN_COORD_TOP_DEFAULT: PIN_COORD_TOP_DEFAULT,
   };
 })();

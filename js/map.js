@@ -1,5 +1,6 @@
 'use strict';
 (function () {
+  var ESC_KEYCODE = 27;
   var mapPins = document.querySelector('.map__pins');
   var onMapPinMainClick = function () {
     window.helpers.removeClass(window.card.map, 'map--faded');
@@ -31,8 +32,13 @@
       }
     };
     popupClose.addEventListener('click', onButtonCloseClick);
+    onkeydown = function (event) {
+      if (event.keyCode === ESC_KEYCODE) {
+        onButtonCloseClick();
+      }
+    };
   };
-
+  document.addEventListener('keydown', onkeydown);
   window.map = {
     mapPins: mapPins,
   };
