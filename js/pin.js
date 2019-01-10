@@ -10,7 +10,7 @@
   var mapPinMain = document.querySelector('.map__pin--main');
   var template = document.querySelector('#pin').content.querySelector('button');
   var сreatePins = function (data) {
-    for (var i = 0; i < data.length; i++) {
+    for (var i = 0; i < window.filters.PINS_NUMBER; i++) {
       var element = template.cloneNode(true);
 
       element.style.left = data[i].location.x - window.data.PIN_WEIGHT / 2 + 'px';
@@ -62,7 +62,7 @@
           var inputAdressCoordX = finishCoordsX;
           mapPinMain.style.top = finishCoordsY + 'px';
           var inputAdressCoordY = finishCoordsY;
-          window.form.inputAddress.value = ('"' + (inputAdressCoordX + PIN_MAIN_WIDTH / 2) + ' , ' + (inputAdressCoordY + PIN_MAIN_HEIGHT) + '"');
+          window.form.inputAddress.value = ((inputAdressCoordX + PIN_MAIN_WIDTH / 2) + ' , ' + (inputAdressCoordY + PIN_MAIN_HEIGHT));
         }
       };
       var onMouseUp = function (upEvt) {

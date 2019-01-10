@@ -41,5 +41,6 @@
   document.addEventListener('keydown', onkeydown);
   window.map = {
     mapPins: mapPins,
+    ESC_KEYCODE: ESC_KEYCODE,
   };
 })();

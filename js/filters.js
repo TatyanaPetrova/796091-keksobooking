@@ -11,13 +11,13 @@
   var housingGuests = document.querySelector('#housing-guests');
   var housingFeatures = document.querySelector('#housing-features');
 
-  function disableFiltersForm() {
+  var disableFiltersForm = function () {
     window.helpers.addAttributeForOneElement(housingType, 'disabled');
     window.helpers.addAttributeForOneElement(housingPrice, 'disabled');
     window.helpers.addAttributeForOneElement(housingRooms, 'disabled');
     window.helpers.addAttributeForOneElement(housingGuests, 'disabled');
     window.helpers.addAttributeForOneElement(housingFeatures, 'disabled');
-  }
+  };
   disableFiltersForm();
 
   window.debounce = function (cb) {
@@ -60,7 +60,7 @@
     });
   };
 
-  function getFilteredArray() {
+  var getFilteredArray = function () {
     var adDataArray = window.data.listData.slice(0);
     var roomsValue = housingRooms.value;
     var houseTypeValue = housingType.value;
@@ -75,7 +75,7 @@
     });
     var limitFiltredArray = filteredArray.slice(0, PINS_NUMBER);
     return limitFiltredArray;
-  }
+  };
 
   mapFilters.onchange = window.debounce(function (evt) {
     var target = evt.target;
@@ -95,5 +95,6 @@
     mapFilters: mapFilters,
     housingFeatures: housingFeatures,
     removePins: removePins,
+    PINS_NUMBER: PINS_NUMBER,
   };
 })();

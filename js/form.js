@@ -1,6 +1,6 @@
 'use strict';
 (function () {
-  var config = {
+  var Config = {
     type: {
       price: {
         bungalo: 0,
@@ -19,6 +19,13 @@
   var inputAddress = document.querySelector('#address');
   var adForm = document.querySelector('.ad-form');
 
+  var hiddenPins = function () {
+    var pins = document.querySelectorAll('.map__pin:not(.map__pin--main)');
+    pins.forEach(function (pin) {
+      pin.classList.add('hidden');
+    });
+  };
+
   var addFormAttributeDisabled = function () {
     window.helpers.addAttribute(inputs, 'disabled');
     window.helpers.addAttribute(selects, 'disabled');
@@ -27,9 +34,8 @@
     window.helpers.addAttributeForOneElement(textarea, 'disabled');
   };
   addFormAttributeDisabled();
-  window.helpers.addValue(inputAddress, ('"' + (window.data.SCREEN_WIDTH / 2) +
-    ' , ' + (window.data.SCREEN_HEIGHT / 2) + '"'));
-  //  связь типа жилья и цены
+  window.helpers.addValue(inputAddress, ((window.data.SCREEN_WIDTH / 2) +
+    ' , ' + (window.data.SCREEN_HEIGHT / 2)));
 
   var adTypeSelect = document.querySelector('#type');
   var housePrise = document.querySelector('#price');
@@ -38,24 +44,22 @@
     var adType = document.querySelector('#type').value;
     switch (adType) {
       case 'bungalo':
-        housePrise.value = config.type.price.bungalo;
+        housePrise.value = Config.type.price.bungalo;
         break;
       case 'flat':
-        housePrise.value = config.type.price.flat;
+        housePrise.value = Config.type.price.flat;
         break;
       case 'house':
-        housePrise.value = config.type.price.house;
+        housePrise.value = Config.type.price.house;
         break;
       case 'palace':
-        housePrise.value = config.type.price.palace;
+        housePrise.value = Config.type.price.palace;
         break;
     }
     return adType;
   };
 
   adTypeSelect.addEventListener('change', onSelectType);
-
-  //  связь времени заезада и выезда
 
   var timeOutSelect = document.querySelector('#timeout');
   var timeInSelect = document.querySelector('#timein');
@@ -141,12 +145,6 @@
     window.card.removeCard();
     window.pin.mapPinMain.style.left = window.pin.PIN_COORD_LEFT_DEFAULT;
     window.pin.mapPinMain.style.top = window.pin.PIN_COORD_TOP_DEFAULT;
-    var hiddenPins = function () {
-      var pins = document.querySelectorAll('.map__pin:not(.map__pin--main)');
-      pins.forEach(function (pin) {
-        pin.classList.add('hidden');
-      });
-    };
     hiddenPins();
 
 
@@ -156,6 +154,12 @@
       body.removeChild(successMessage);
     };
     body.addEventListener('click', onSuccessMessageClick);
+    onkeydown = function (event) {
+      if (event.keyCode === window.map.ESC_KEYCODE) {
+        onSuccessMessageClick();
+      }
+    };
+    document.addEventListener('keydown', onkeydown);
   };
 
   var onError = function () {
@@ -164,7 +168,14 @@
     var onErrorMessageClick = function () {
       body.removeChild(errorMessage);
     };
+    onkeydown = function (event) {
+      if (event.keyCode === window.map.ESC_KEYCODE) {
+        onErrorMessageClick();
+      }
+    };
     body.addEventListener('click', onErrorMessageClick);
+    document.addEventListener('keydown', onkeydown);
+
   };
 
   adForm.addEventListener('submit', function (evt) {
@@ -174,6 +185,17 @@
     adForm.reset();
 
   });
+
+  var onClickReset = function () {
+    map.classList.add('map--faded');
+    adForm.classList.add('ad-form--disabled');
+    window.card.removeCard();
+    window.pin.mapPinMain.style.left = window.pin.PIN_COORD_LEFT_DEFAULT;
+    window.pin.mapPinMain.style.top = window.pin.PIN_COORD_TOP_DEFAULT;
+    hiddenPins();
+  };
+  document.querySelector('.ad-form__reset').addEventListener('click', onClickReset);
+
 
   window.form = {
     adForm: adForm,
