@@ -22,16 +22,16 @@
   var copyCheckin = CHECKIN.slice();
   var numberPhotos = PHOTOS.length;
 
-  function getRandomValueFromList(list) {
+  var getRandomValueFromList = function (list) {
     var rand = Math.floor(Math.random() * list.length);
     return list[rand];
-  }
+  };
 
-  function getRandomValue(min, max) {
+  var getRandomValue = function (min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
-  }
+  };
 
-  function createAdCard(index) {
+  var createAdCard = function (index) {
     return {
       author: {
         avatar: 'img/avatars/user0' + ++index + '.png',
@@ -56,15 +56,15 @@
         y: getRandomValue(REFERENCE_POINT_HEIGHT, SCREEN_HEIGHT - PIN_HEIGHT),
       }
     };
-  }
+  };
 
-  function generateOfferList() {
+  var generateOfferList = function () {
     var list = [];
     for (var i = 0; i < COUNT_CARDS; i++) {
       list.push(createAdCard(i));
     }
     return list;
-  }
+  };
 
   var listData = generateOfferList();
   window.data = {

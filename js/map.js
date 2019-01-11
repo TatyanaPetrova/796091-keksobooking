@@ -31,8 +31,13 @@
       }
     };
     popupClose.addEventListener('click', onButtonCloseClick);
+    onkeydown = function (event) {
+      if (event.keyCode === window.constans.ESC_KEYCODE) {
+        onButtonCloseClick();
+      }
+    };
   };
-
+  document.addEventListener('keydown', onkeydown);
   window.map = {
     mapPins: mapPins,
   };
