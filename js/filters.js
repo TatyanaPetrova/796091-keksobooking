@@ -1,6 +1,5 @@
 'use strict';
 (function () {
-  var PINS_NUMBER = 5;
   var LOW_PRICE = 10000;
   var HIGH_PRICE = 50000;
   var DEBOUNCE_INTERVAL = 500; // ms
@@ -73,7 +72,7 @@
           getPrice(item)) &&
         (houseTypeValue === 'any' ? true : item.offer.type + '' === houseTypeValue) && (houseGuestsValue === 'any' ? true : item.offer.guests + '' === houseGuestsValue) && (getFeatures(item, checkedFeatures));
     });
-    var limitFiltredArray = filteredArray.slice(0, PINS_NUMBER);
+    var limitFiltredArray = filteredArray.slice(0, window.constans.PINS_NUMBER);
     return limitFiltredArray;
   };
 
@@ -95,6 +94,5 @@
     mapFilters: mapFilters,
     housingFeatures: housingFeatures,
     removePins: removePins,
-    PINS_NUMBER: PINS_NUMBER,
   };
 })();

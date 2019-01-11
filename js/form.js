@@ -19,7 +19,7 @@
   var inputAddress = document.querySelector('#address');
   var adForm = document.querySelector('.ad-form');
 
-  var hiddenPins = function () {
+  var hidePins = function () {
     var pins = document.querySelectorAll('.map__pin:not(.map__pin--main)');
     pins.forEach(function (pin) {
       pin.classList.add('hidden');
@@ -145,7 +145,7 @@
     window.card.removeCard();
     window.pin.mapPinMain.style.left = window.pin.PIN_COORD_LEFT_DEFAULT;
     window.pin.mapPinMain.style.top = window.pin.PIN_COORD_TOP_DEFAULT;
-    hiddenPins();
+    hidePins();
 
 
     var successMessage = document.querySelector('#success').content.querySelector('div');
@@ -155,7 +155,7 @@
     };
     body.addEventListener('click', onSuccessMessageClick);
     onkeydown = function (event) {
-      if (event.keyCode === window.map.ESC_KEYCODE) {
+      if (event.keyCode === window.constans.ESC_KEYCODE) {
         onSuccessMessageClick();
       }
     };
@@ -169,7 +169,7 @@
       body.removeChild(errorMessage);
     };
     onkeydown = function (event) {
-      if (event.keyCode === window.map.ESC_KEYCODE) {
+      if (event.keyCode === window.constans.ESC_KEYCODE) {
         onErrorMessageClick();
       }
     };
@@ -192,7 +192,7 @@
     window.card.removeCard();
     window.pin.mapPinMain.style.left = window.pin.PIN_COORD_LEFT_DEFAULT;
     window.pin.mapPinMain.style.top = window.pin.PIN_COORD_TOP_DEFAULT;
-    hiddenPins();
+    hidePins();
   };
   document.querySelector('.ad-form__reset').addEventListener('click', onClickReset);
 

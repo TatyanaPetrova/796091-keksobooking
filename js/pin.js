@@ -10,7 +10,7 @@
   var mapPinMain = document.querySelector('.map__pin--main');
   var template = document.querySelector('#pin').content.querySelector('button');
   var сreatePins = function (data) {
-    for (var i = 0; i < window.filters.PINS_NUMBER; i++) {
+    for (var i = 0; i < window.constans.PINS_NUMBER; i++) {
       var element = template.cloneNode(true);
 
       element.style.left = data[i].location.x - window.data.PIN_WEIGHT / 2 + 'px';
