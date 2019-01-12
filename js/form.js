@@ -1,12 +1,12 @@
 'use strict';
 (function () {
   var Config = {
-    type: {
-      price: {
-        bungalo: 0,
-        flat: 1000,
-        house: 5000,
-        palace: 10000,
+    Type: {
+      Price: {
+        BUNGALO: 0,
+        FLAT: 1000,
+        HOUSE: 5000,
+        PALACE: 10000,
       }
     }
   };
@@ -44,16 +44,16 @@
     var adType = document.querySelector('#type').value;
     switch (adType) {
       case 'bungalo':
-        housePrise.value = Config.type.price.bungalo;
+        housePrise.placeholder = Config.Type.Price.BUNGALO;
         break;
       case 'flat':
-        housePrise.value = Config.type.price.flat;
+        housePrise.placeholder = Config.Type.Price.FLAT;
         break;
       case 'house':
-        housePrise.value = Config.type.price.house;
+        housePrise.placeholder = Config.Type.Price.HOUSE;
         break;
       case 'palace':
-        housePrise.value = Config.type.price.palace;
+        housePrise.placeholder = Config.Type.Price.PALACE;
         break;
     }
     return adType;
@@ -193,6 +193,8 @@
     window.pin.mapPinMain.style.left = window.pin.PIN_COORD_LEFT_DEFAULT;
     window.pin.mapPinMain.style.top = window.pin.PIN_COORD_TOP_DEFAULT;
     hidePins();
+    addFormAttributeDisabled();
+    adForm.reset();
   };
   document.querySelector('.ad-form__reset').addEventListener('click', onClickReset);
 

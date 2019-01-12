@@ -12,7 +12,6 @@
   var сreatePins = function (data) {
     for (var i = 0; i < window.constans.PINS_NUMBER; i++) {
       var element = template.cloneNode(true);
-
       element.style.left = data[i].location.x - window.data.PIN_WEIGHT / 2 + 'px';
       element.style.top = data[i].location.y + window.data.PIN_HEIGHT + 'px';
       element.querySelector('img').src = data[i].author.avatar;

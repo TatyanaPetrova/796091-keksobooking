@@ -1,6 +1,11 @@
 'use strict';
 (function () {
   var mapPins = document.querySelector('.map__pins');
+  var removeCard = function (card) {
+    if (card) {
+      card.parentNode.removeChild(card);
+    }
+  };
   var onMapPinMainClick = function () {
     window.helpers.removeClass(window.card.map, 'map--faded');
     window.helpers.removeClass(window.form.adForm, 'ad-form--disabled');
@@ -26,9 +31,7 @@
     var mapCard = document.querySelector('.map__card');
     var popupClose = document.querySelector('.popup__close');
     var onButtonCloseClick = function () {
-      if (mapCard) {
-        mapCard.parentNode.removeChild(mapCard);
-      }
+      removeCard(mapCard);
     };
     popupClose.addEventListener('click', onButtonCloseClick);
     onkeydown = function (event) {
@@ -40,5 +43,6 @@
   document.addEventListener('keydown', onkeydown);
   window.map = {
     mapPins: mapPins,
+    removeCard: removeCard,
   };
 })();
