@@ -61,7 +61,7 @@
     return limitFiltredArray;
   };
 
-  mapFilters.onchange = window.debounce(function (evt) {
+  mapFilters.onchange = window.helpers.debounce(function (evt) {
     var target = evt.target;
     if (target.tagName === 'FORM') {
       return;

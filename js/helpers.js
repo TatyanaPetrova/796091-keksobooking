@@ -40,7 +40,7 @@
     }
   };
 
-  window.debounce = function (cb) {
+  var debounce = function (cb) {
     var lastTimeout = null;
 
     return function () {
@@ -55,6 +55,7 @@
   };
 
   window.helpers = {
+    debounce: debounce,
     removeClass: removeClass,
     addAttribute: addAttribute,
     deleteAttribute: deleteAttribute,
