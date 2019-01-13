@@ -151,9 +151,9 @@
     var successMessage = document.querySelector('#success').content.querySelector('div');
     body.insertBefore(successMessage, main);
     var onSuccessMessageClick = function () {
-      body.removeChild(successMessage);
+      successMessage.parentNode.removeChild(successMessage);
     };
-    body.addEventListener('click', onSuccessMessageClick);
+    successMessage.addEventListener('click', onSuccessMessageClick);
     onkeydown = function (event) {
       if (event.keyCode === window.constans.ESC_KEYCODE) {
         onSuccessMessageClick();
@@ -173,7 +173,7 @@
         onErrorMessageClick();
       }
     };
-    body.addEventListener('click', onErrorMessageClick);
+    errorMessage.addEventListener('click', onErrorMessageClick);
     document.addEventListener('keydown', onkeydown);
 
   };
