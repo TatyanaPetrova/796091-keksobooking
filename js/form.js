@@ -39,21 +39,26 @@
 
   var adTypeSelect = document.querySelector('#type');
   var housePrise = document.querySelector('#price');
+  window.helpers.setAttribute(housePrise, 'min', Config.Type.Price.FLAT);
 
   var onSelectType = function () {
     var adType = document.querySelector('#type').value;
     switch (adType) {
       case 'bungalo':
         housePrise.placeholder = Config.Type.Price.BUNGALO;
+        housePrise.min = Config.Type.Price.BUNGALO;
         break;
       case 'flat':
         housePrise.placeholder = Config.Type.Price.FLAT;
+        housePrise.min = Config.Type.Price.FLAT;
         break;
       case 'house':
         housePrise.placeholder = Config.Type.Price.HOUSE;
+        housePrise.min = Config.Type.Price.HOUSE;
         break;
       case 'palace':
         housePrise.placeholder = Config.Type.Price.PALACE;
+        housePrise.min = Config.Type.Price.PALACE;
         break;
     }
     return adType;
@@ -150,6 +155,7 @@
 
     var successMessage = document.querySelector('#success').content.querySelector('div');
     body.insertBefore(successMessage, main);
+
     var onSuccessMessageClick = function () {
       successMessage.parentNode.removeChild(successMessage);
     };
@@ -160,6 +166,7 @@
       }
     };
     document.addEventListener('keydown', onkeydown);
+    document.removeEventListener('keydown', onkeydown);
   };
 
   var onError = function () {

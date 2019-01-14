@@ -53,6 +53,9 @@
       }, DEBOUNCE_INTERVAL);
     };
   };
+  var setAttribute = function (selector, attribute, value) {
+    selector.setAttribute(attribute, value);
+  };
 
   window.helpers = {
     debounce: debounce,
@@ -64,5 +67,6 @@
     removeManyClass: removeManyClass,
     addAttributeForOneElement: addAttributeForOneElement,
     deleteAttributeForOneElement: deleteAttributeForOneElement,
+    setAttribute: setAttribute,
   };
 })();
