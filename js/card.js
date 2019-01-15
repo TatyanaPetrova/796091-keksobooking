@@ -77,7 +77,7 @@
   };
   window.card = {
     map: map,
-    сreateCards: сreateCards,
-    removeCard: removeCard,
+    сreate: сreateCards,
+    remove: removeCard,
   };
 })();

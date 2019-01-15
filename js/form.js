@@ -64,8 +64,6 @@
     return adType;
   };
 
-  adTypeSelect.addEventListener('change', onSelectType);
-
   var timeOutSelect = document.querySelector('#timeout');
   var timeInSelect = document.querySelector('#timein');
 
@@ -85,8 +83,6 @@
     return timeInValue;
   };
 
-  timeInSelect.addEventListener('change', onSelectTimeOut);
-
   var onSelectTimeIn = function () {
     var timeOutValue = document.querySelector('#timeout').value;
     switch (timeOutValue) {
@@ -102,8 +98,6 @@
     }
     return timeOutValue;
   };
-
-  timeOutSelect.addEventListener('change', onSelectTimeIn);
 
   var roomNumber = document.querySelector('#room_number');
   var capacity = document.querySelector('#capacity');
@@ -137,8 +131,6 @@
     return roomNumberValue;
   };
 
-  roomNumber.addEventListener('change', onSelectRoomNumber);
-
   //  Отправка формы
   var main = document.querySelector('main');
   var body = document.querySelector('body');
@@ -147,72 +139,79 @@
     addFormAttributeDisabled();
     map.classList.add('map--faded');
     adForm.classList.add('ad-form--disabled');
-    window.card.removeCard();
-    window.pin.mapPinMain.style.left = window.pin.PIN_COORD_LEFT_DEFAULT;
-    window.pin.mapPinMain.style.top = window.pin.PIN_COORD_TOP_DEFAULT;
+    window.card.remove();
+    window.pin.mapMain.style.left = window.pin.PIN_COORD_LEFT_DEFAULT;
+    window.pin.mapMain.style.top = window.pin.PIN_COORD_TOP_DEFAULT;
     hidePins();
-
 
     var successMessage = document.querySelector('#success').content.querySelector('div');
     body.insertBefore(successMessage, main);
-
     var onSuccessMessageClick = function () {
+      document.removeEventListener('keydown', onSuccessKeyDown);
       successMessage.parentNode.removeChild(successMessage);
     };
     successMessage.addEventListener('click', onSuccessMessageClick);
-    onkeydown = function (event) {
-      if (event.keyCode === window.constans.ESC_KEYCODE) {
-        onSuccessMessageClick();
-      }
+
+    var onSuccessKeyDown = function (evt) {
+      window.helpers.onKeyDown(evt, onSuccessMessageClick);
     };
-    document.addEventListener('keydown', onkeydown);
-    document.removeEventListener('keydown', onkeydown);
+
+    document.addEventListener('keydown', onSuccessKeyDown);
   };
 
   var onError = function () {
     var errorMessage = document.querySelector('#error').content.querySelector('div');
     body.insertBefore(errorMessage, main);
     var onErrorMessageClick = function () {
+      document.removeEventListener('keydown', onErrorKeyDown);
       body.removeChild(errorMessage);
     };
-    onkeydown = function (event) {
-      if (event.keyCode === window.constans.ESC_KEYCODE) {
-        onErrorMessageClick();
-      }
-    };
     errorMessage.addEventListener('click', onErrorMessageClick);
-    document.addEventListener('keydown', onkeydown);
+    var onErrorKeyDown = function (evt) {
+      window.helpers.onKeyDown(evt, onErrorMessageClick);
+    };
+    document.addEventListener('keydown', onErrorKeyDown);
 
   };
 
-  adForm.addEventListener('submit', function (evt) {
-    evt.preventDefault();
-    var formData = new FormData(adForm);
-    window.backend.upLoad(formData, onSuccess, onError);
-    adForm.reset();
+  var submitForm = function () {
+    adForm.addEventListener('submit', function (evt) {
+      evt.preventDefault();
+      var formData = new FormData(adForm);
+      window.backend.upLoad(formData, onSuccess, onError);
+      adForm.reset();
 
-  });
-
+    });
+  };
   var onClickReset = function () {
     map.classList.add('map--faded');
     adForm.classList.add('ad-form--disabled');
-    window.card.removeCard();
-    window.pin.mapPinMain.style.left = window.pin.PIN_COORD_LEFT_DEFAULT;
-    window.pin.mapPinMain.style.top = window.pin.PIN_COORD_TOP_DEFAULT;
+    window.card.remove();
+    window.pin.mapMain.style.left = window.pin.PIN_COORD_LEFT_DEFAULT;
+    window.pin.mapMain.style.top = window.pin.PIN_COORD_TOP_DEFAULT;
     hidePins();
     addFormAttributeDisabled();
     adForm.reset();
   };
-  document.querySelector('.ad-form__reset').addEventListener('click', onClickReset);
 
 
   window.form = {
-    adForm: adForm,
+    ad: adForm,
     inputs: inputs,
     selects: selects,
     textarea: textarea,
-    buttonFormSubmi: buttonFormSubmit,
-    buttonFormReset: buttonFormReset,
+    buttonSubmit: buttonFormSubmit,
+    buttonReset: buttonFormReset,
     inputAddress: inputAddress,
+    adTypeSelect: adTypeSelect,
+    onSelectType: onSelectType,
+    timeInSelect: timeInSelect,
+    timeOutSelect: timeOutSelect,
+    onSelectTimeIn: onSelectTimeIn,
+    roomNumber: roomNumber,
+    onSelectRoomNumber: onSelectRoomNumber,
+    onClickReset: onClickReset,
+    submit: submitForm,
+    onSelectTimeOut: onSelectTimeOut,
   };
 })();

@@ -57,6 +57,12 @@
     selector.setAttribute(attribute, value);
   };
 
+  var onKeyDown = function (event, cb) {
+    if (event.keyCode === window.constans.ESC_KEYCODE) {
+      cb();
+    }
+  };
+
   window.helpers = {
     debounce: debounce,
     removeClass: removeClass,
@@ -68,5 +74,6 @@
     addAttributeForOneElement: addAttributeForOneElement,
     deleteAttributeForOneElement: deleteAttributeForOneElement,
     setAttribute: setAttribute,
+    onKeyDown: onKeyDown
   };
 })();
