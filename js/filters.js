@@ -61,21 +61,22 @@
     return limitFiltredArray;
   };
 
-  mapFilters.onchange = window.helpers.debounce(function (evt) {
-    var target = evt.target;
-    if (target.tagName === 'FORM') {
-      return;
-    }
-    removePins();
-    var popup = document.querySelector('.popup');
-    window.map.removeCard(popup);
-    window.data.filteredListData = getFilteredArray();
-    window.pin.createPins(window.data.filteredListData);
-  });
-
+  var addHandlerFilters = function () {
+    mapFilters.onchange = window.helpers.debounce(function (evt) {
+      var target = evt.target;
+      if (target.tagName === 'FORM') {
+        return;
+      }
+      removePins();
+      var popup = document.querySelector('.popup');
+      window.card.remove(popup);
+      window.data.filteredListData = getFilteredArray();
+      window.pin.create(window.data.filteredListData);
+    });
+  };
   window.filters = {
-    mapFilters: mapFilters,
     housingFeatures: housingFeatures,
     removePins: removePins,
+    addHandler: addHandlerFilters,
   };
 })();

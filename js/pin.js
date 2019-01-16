@@ -16,9 +16,9 @@
       element.style.top = data[i].location.y - window.data.PIN_HEIGHT + 'px';
       element.querySelector('img').src = data[i].author.avatar;
       mapPins.appendChild(element);
-      var mapPin = document.querySelectorAll('.map__pin');
-      for (var j = 0; j < mapPin.length; j++) {
-        window.helpers.addValue(mapPin[j], j);
+      var allMapPins = document.querySelectorAll('.map__pin');
+      for (var j = 0; j < allMapPins.length; j++) {
+        window.helpers.addValue(allMapPins[j], j);
       }
     }
   };
@@ -26,6 +26,28 @@
   var onLoadSuccess = function (data) {
     window.data.listData = data;
     сreatePins(data.slice(0, 5));
+  };
+
+  var createErrorMessage = function (errorMessage) {
+    var errorPopup = document.createElement('div');
+    errorPopup.classList.add('error');
+    var message = document.createElement('p');
+    message.classList.add('error__message');
+    message.textContent = errorMessage;
+    document.body.insertBefore(errorPopup, document.querySelector('main'));
+    errorPopup.insertBefore(message, null);
+    var onErrorPopupClick = function () {
+      document.removeEventListener('keydown', onErrorPopupKeyDown);
+      document.body.removeChild(errorPopup);
+    };
+    errorPopup.addEventListener('click', onErrorPopupClick);
+    var onErrorPopupKeyDown = function (evt) {
+      window.helpers.onKeyDown(evt, onErrorPopupClick);
+    };
+    document.addEventListener('keydown', onErrorPopupKeyDown);
+  };
+  var onLoadError = function (errorMessage) {
+    createErrorMessage(errorMessage);
   };
 
   var movePin = function () {
@@ -70,7 +92,7 @@
         document.removeEventListener('mousemove', onMouseMove);
         document.removeEventListener('mouseup', onMouseUp);
         if (!loaded) {
-          window.backend.load(onLoadSuccess);
+          window.backend.load(onLoadSuccess, onLoadError);
           loaded = true;
         }
         var showPins = function () {
@@ -87,10 +109,9 @@
   };
   movePin();
   window.pin = {
-    mapPinMain: mapPinMain,
+    mapMain: mapPinMain,
     mapPins: mapPins,
-    createPins: сreatePins,
-    movePin: movePin,
+    create: сreatePins,
     PIN_COORD_LEFT_DEFAULT: PIN_COORD_LEFT_DEFAULT,
     PIN_COORD_TOP_DEFAULT: PIN_COORD_TOP_DEFAULT,
   };

@@ -53,6 +53,15 @@
       }, DEBOUNCE_INTERVAL);
     };
   };
+  var setAttribute = function (selector, attribute, value) {
+    selector.setAttribute(attribute, value);
+  };
+
+  var onKeyDown = function (event, cb) {
+    if (event.keyCode === window.constans.ESC_KEYCODE) {
+      cb();
+    }
+  };
 
   window.helpers = {
     debounce: debounce,
@@ -64,5 +73,7 @@
     removeManyClass: removeManyClass,
     addAttributeForOneElement: addAttributeForOneElement,
     deleteAttributeForOneElement: deleteAttributeForOneElement,
+    setAttribute: setAttribute,
+    onKeyDown: onKeyDown
   };
 })();
