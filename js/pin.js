@@ -110,7 +110,6 @@
   movePin();
   window.pin = {
     mapMain: mapPinMain,
-    mapPins: mapPins,
     create: сreatePins,
     PIN_COORD_LEFT_DEFAULT: PIN_COORD_LEFT_DEFAULT,
     PIN_COORD_TOP_DEFAULT: PIN_COORD_TOP_DEFAULT,
