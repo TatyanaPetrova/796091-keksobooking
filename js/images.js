@@ -4,7 +4,6 @@
   var IMAGE_WIDTH = 70 + 'px';
   var IMAGE_HEIGHT = 70 + 'px';
   var IMAGE_BORDER_RADIUS = 5 + 'px';
-  var AVATAR = 'img/muffin-grey.svg';
   var avatarPreview = document.querySelector('.ad-form-header__preview img');
   var avatarChooser = document.querySelector('#avatar');
   var photo = document.querySelector('.ad-form__photo');
@@ -32,47 +31,37 @@
     });
   };
 
-  var removeAvatar = function () {
-    avatarPreview.src = AVATAR;
+  var changeAvatar = function (src) {
+    avatarPreview.src = src;
   };
 
-  imagesChooser.addEventListener('change', function () {
-    var images = imagesChooser.files[0];
-    var imagesName = images.name.toLowerCase();
-    var matches = FILE_TYPES.some(function (it) {
-      return imagesName.endsWith(it);
-    });
-
-    if (matches) {
-      var reader = new FileReader();
-
-      reader.addEventListener('load', function () {
-        createImage(reader.result);
+  var loadImages = function (chooser, fnc) {
+    chooser.addEventListener('change', function () {
+      var file = chooser.files[0];
+      var fileName = file.name.toLowerCase();
+      var matches = FILE_TYPES.some(function (it) {
+        return fileName.endsWith(it);
       });
 
-      reader.readAsDataURL(images);
-    }
-  });
-  avatarChooser.addEventListener('change', function () {
-    var avatar = avatarChooser.files[0];
-    var avatarName = avatar.name.toLowerCase();
+      if (matches) {
+        var reader = new FileReader();
 
-    var matches = FILE_TYPES.some(function (it) {
-      return avatarName.endsWith(it);
+        reader.addEventListener('load', function () {
+          fnc(reader.result);
+        });
+
+        reader.readAsDataURL(file);
+      }
     });
+  };
+  var loadUserImages = function () {
+    loadImages(imagesChooser, createImage);
+    loadImages(avatarChooser, changeAvatar);
+  };
 
-    if (matches) {
-      var reader = new FileReader();
-
-      reader.addEventListener('load', function () {
-        avatarPreview.src = reader.result;
-      });
-
-      reader.readAsDataURL(avatar);
-    }
-  });
   window.images = {
     remove: removeImages,
-    removeAvatar: removeAvatar,
+    load: loadUserImages,
+    change: changeAvatar,
   };
 })();

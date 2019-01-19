@@ -1,5 +1,6 @@
 'use strict';
 (function () {
+  var AVATAR = 'img/muffin-grey.svg';
   var Config = {
     Type: {
       Price: {
@@ -181,8 +182,7 @@
       window.backend.upLoad(formData, onSuccess, onError);
       adForm.reset();
       window.images.remove();
-      window.images.removeAvatar();
-
+      window.images.change(AVATAR);
     });
   };
   var onClickReset = function () {
@@ -195,7 +195,7 @@
     addFormAttributeDisabled();
     adForm.reset();
     window.images.remove();
-    window.images.removeAvatar();
+    window.images.change(AVATAR);
   };
 
 

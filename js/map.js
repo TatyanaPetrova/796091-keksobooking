@@ -23,6 +23,7 @@
 
     window.form.submit();
     window.filters.addHandler();
+    window.images.load();
   };
   window.helpers.addValue(document.querySelector('#address'), ((window.data.SCREEN_WIDTH / 2) +
     ' ; ' + (window.data.SCREEN_HEIGHT / 2)));
