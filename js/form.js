@@ -180,6 +180,8 @@
       var formData = new FormData(adForm);
       window.backend.upLoad(formData, onSuccess, onError);
       adForm.reset();
+      window.images.remove();
+      window.images.removeAvatar();
 
     });
   };
@@ -192,6 +194,8 @@
     hidePins();
     addFormAttributeDisabled();
     adForm.reset();
+    window.images.remove();
+    window.images.removeAvatar();
   };
 
 
